@@ -1,0 +1,34 @@
+
+.NavBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    height: 3rem;
+}
+
+.NavLeft{
+    font-weight: bold;
+    text-decoration: underline;
+    padding-left: 1.5rem;
+}
+
+.NavLinks > li {
+    display: inline-block;
+    padding-right: 2rem;
+}
+
+.NavRight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 2rems;
+}
+
+.LoginButton {
+    border: 1px solid black;
+    border-radius: 5%;
+    margin-right: 2rem;
+    padding: 0.5rem;
+    height: 100%;
+}
