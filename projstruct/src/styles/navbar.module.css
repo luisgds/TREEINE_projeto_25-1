@@ -54,3 +54,19 @@
     margin: auto;
 }
 
+@media screen and (max-width:600px) {
+
+    .NavLinks li {
+        padding: 5px;
+    }
+
+    .NavLeft{
+        padding: 0;
+    }
+
+    .NavBar{
+        justify-content:space-around;
+    }
+
+}
+
