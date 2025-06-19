@@ -11,6 +11,16 @@
     font-weight: bold;
     text-decoration: underline;
     padding-left: 1.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.NavLeft a {
+    margin-left: 0.5rem;
+}
+
+.NavLeft i {
+    margin: auto;
 }
 
 .NavLinks > li {
@@ -26,9 +36,21 @@
 }
 
 .LoginButton {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
     border: 1px solid black;
     border-radius: 5%;
     margin-right: 2rem;
     padding: 0.5rem;
     height: 100%;
 }
+
+.LoginButton button{
+    padding-left: 0.5rem;
+}
+
+.LoginButton i {
+    margin: auto;
+}
+

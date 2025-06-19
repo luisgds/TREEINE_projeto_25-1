@@ -1,12 +1,13 @@
 import styles from "~/styles/navbar.module.css"
-import { VscAccount } from "react-icons/vsc";
+import { AiOutlineLogin } from "react-icons/ai";
+import { IoMusicalNotes } from "react-icons/io5";
 
 export  function NavBar(){
 
     return(
         <nav className={styles.NavBar}>
             <div className={styles.NavLeft}>
-                <a className={styles.MainPageLink} href="#"> MusicStore </a>
+              <i><IoMusicalNotes /></i>  <a className={styles.MainPageLink} href="#"> MusicStore </a>
             </div>
             <div className={styles.NavRight}>
                 <ul className={styles.NavLinks}>
@@ -21,7 +22,7 @@ export  function NavBar(){
                     </li>
                 </ul>   
                 <div className={styles.LoginButton}>
-                    <button>Login</button>
+                   <i><AiOutlineLogin/></i><button>Login</button>
                 </div>
             </div>
         </nav>

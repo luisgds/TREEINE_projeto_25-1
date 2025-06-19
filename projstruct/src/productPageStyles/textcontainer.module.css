@@ -65,3 +65,22 @@
     padding: 2rem;
     padding-top: 4rem;
 }
+
+@media screen and (max-width:1024px) {
+    
+    .Container_horizontal{
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+        align-items: center;
+    }
+
+    .Paragraph_1{
+        width: 100%;
+    }
+
+    .ListContainer{
+        width: 80%;
+    }
+}
+
