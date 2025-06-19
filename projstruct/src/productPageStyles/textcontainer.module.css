@@ -1,0 +1,67 @@
+
+.Container{
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    text-align: center;
+    padding: 3rem;
+}
+
+.Container_horizontal{
+    margin-top: 2rem;
+    background-color: aliceblue;
+    border-radius: 10px;
+    margin: auto;
+    display: flex;
+    width: 70%;
+}
+
+.ListContainer{
+    justify-content: space-evenly;
+    display: flex;
+    flex-direction: column;
+    margin: 2rem;
+    padding: 2rem;
+    align-items: center;
+    width: 40%;
+    color: white;
+    border-radius: 20px;
+    background-color: purple;
+    height: 80%;
+}
+
+.ListContainer h3{
+    font-weight: 500;
+    font-size: large;
+    margin-bottom: 1rem;
+}
+
+.ListContainer ul {
+    list-style:circle;
+    list-style-type: disc;
+    float: left;
+}
+    
+
+.Header1{
+    font-size: 30;
+    font-weight: 500;
+}
+
+.Header2{
+    font-size: 25;
+    font-weight: 400;
+}
+
+.Paragraph{
+    width: 80%;
+    margin: auto;
+    margin-bottom: 1rem;
+    color: rgb(86, 84, 84)
+}
+
+.Paragraph_1{
+    width: 40%;
+    padding: 2rem;
+    padding-top: 4rem;
+}
