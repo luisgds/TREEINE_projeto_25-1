@@ -6,7 +6,6 @@
 }
 
 @media screen and (max-width:1024px){
-
     .ProductRow{
         display: flex;
         flex-wrap: wrap;
