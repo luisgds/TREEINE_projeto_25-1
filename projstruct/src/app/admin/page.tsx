@@ -7,6 +7,7 @@ import { BsBoxSeam } from "react-icons/bs";
 import { GoPeople } from "react-icons/go";
 import { FaChartBar } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
+import { ProductForm } from "../_components/admin/productForm";
 
 export default function AdminPage() {
     return (
