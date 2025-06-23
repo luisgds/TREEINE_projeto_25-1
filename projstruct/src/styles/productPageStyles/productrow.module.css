@@ -1,0 +1,16 @@
+.ProductRow{
+    width: 80%;
+    display: flex;
+    margin: auto;
+    justify-content: space-evenly;
+}
+
+@media screen and (max-width:1024px){
+    .ProductRow{
+        display: flex;
+        flex-wrap: wrap;
+        flex-direction: column;
+        align-items: center;
+    }
+
+}

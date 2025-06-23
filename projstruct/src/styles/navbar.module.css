@@ -1,0 +1,72 @@
+
+.NavBar{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-bottom: 1px solid gray;
+    height: 3rem;
+}
+
+.NavLeft{
+    font-weight: bold;
+    text-decoration: underline;
+    padding-left: 1.5rem;
+    display: flex;
+    flex-direction: row;
+}
+
+.NavLeft a {
+    margin-left: 0.5rem;
+}
+
+.NavLeft i {
+    margin: auto;
+}
+
+.NavLinks > li {
+    display: inline-block;
+    padding-right: 2rem;
+}
+
+.NavRight {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-right: 2rems;
+}
+
+.LoginButton {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
+    border: 1px solid black;
+    border-radius: 5%;
+    margin-right: 2rem;
+    padding: 0.5rem;
+    height: 100%;
+}
+
+.LoginButton button{
+    padding-left: 0.5rem;
+}
+
+.LoginButton i {
+    margin: auto;
+}
+
+@media screen and (max-width:600px) {
+
+    .NavLinks li {
+        padding: 5px;
+    }
+
+    .NavLeft{
+        padding: 0;
+    }
+
+    .NavBar{
+        justify-content:space-around;
+    }
+
+}
+
