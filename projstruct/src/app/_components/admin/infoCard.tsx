@@ -12,7 +12,7 @@ export function InfoCard({
     icon
 }: InfoCardProps) {
     return (
-        <div className="bg-white border-1 border-gray-200 rounded-lg p-3 flex items-center">
+        <div className="bg-white border-1 border-gray-200 rounded-lg p-3 flex items-center shadow-md">
             <div>
                 <h3 className="font-light text-xs">{text}</h3>
                 <div className="font-bold">{data}</div>

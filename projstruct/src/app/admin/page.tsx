@@ -14,17 +14,21 @@ export default function AdminPage() {
         <>
             <NavBar></NavBar>
             <main className="bg-purple-50 pt-5 pb-5">
-                <div className="flex justify-center">
+                <div className="flex justify-center mb-16 mt-16">
                     <h1 className="text-5xl font-bold">Painel <b className="text-purple-600">Administrativo</b></h1>
                 </div>
-                <div className="flex justify-between m-4">
-                    <InfoCard text="Total Produtos" data="156" icon={<BsBoxSeam style={{color: "blue", fontSize: "1.5em"}} />}></InfoCard>
-                    <InfoCard text="Clientes" data="2,340" icon={<GoPeople style={{color: "green", fontSize: "1.5em"}}/>}></InfoCard>
-                    <InfoCard text="Vendas Hoje" data="R$ 4,890" icon={<FaChartBar style={{color: "purple", fontSize: "1.5em"}}/>}></InfoCard>
-                    <InfoCard text="Pedidos" data="23" icon={<IoCartOutline style={{color: "orange", fontSize: "1.5em"}}/>}></InfoCard>
+                <div className="flex justify-center">
+                    <div className="w-full max-w-5xl">
+                        <div className="flex justify-between m-8">
+                            <InfoCard text="Total Produtos" data="156" icon={<BsBoxSeam style={{color: "blue", fontSize: "1.5em"}} />}></InfoCard>
+                            <InfoCard text="Clientes" data="2,340" icon={<GoPeople style={{color: "green", fontSize: "1.5em"}}/>}></InfoCard>
+                            <InfoCard text="Vendas Hoje" data="R$ 4,890" icon={<FaChartBar style={{color: "purple", fontSize: "1.5em"}}/>}></InfoCard>
+                            <InfoCard text="Pedidos" data="23" icon={<IoCartOutline style={{color: "orange", fontSize: "1.5em"}}/>}></InfoCard>
+                        </div>
+                        <ManagementPanel nome="Gestão de produtos"></ManagementPanel>
+                        <ManagementPanel nome="Gestão de Usuários"></ManagementPanel>
+                    </div>
                 </div>
-                <ManagementPanel nome="Gestão de produtos"></ManagementPanel>
-                <ManagementPanel nome="Gestão de Usuários"></ManagementPanel>
             </main>
             <Footer></Footer>
         </>
