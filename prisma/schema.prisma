@@ -14,18 +14,6 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 
-model Post {
-    id        Int      @id @default(autoincrement())
-    name      String
-    createdAt DateTime @default(now())
-    updatedAt DateTime @updatedAt
-
-    createdBy   User   @relation(fields: [createdById], references: [id])
-    createdById String
-
-    @@index([name])
-}
-
 // Necessary for Next auth
 model Account {
     id                       String  @id @default(cuid())
@@ -62,7 +50,7 @@ model User {
     image         String?
     accounts      Account[]
     sessions      Session[]
-    posts         Post[]
+    carts         ShopCart[]
 }
 
 model VerificationToken {
@@ -71,4 +59,21 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+//fim das models do auth
+
+model Product{
+    id Int @id @default(autoincrement())
+    nome String
+    preco Float
+    descricao String?
+    carts ShopCart[]
+}
+
+model ShopCart{
+    id Int @id @default(autoincrement())
+    user_id String
+    product_id Int
+    user User @relation(fields: [user_id], references: [id])
+    product Product @relation(fields: [product_id], references: [id])
 }
