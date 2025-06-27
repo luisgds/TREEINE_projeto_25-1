@@ -1,4 +1,4 @@
-import {type NextRequest, NextResponse} from "next/server";
+import {NextRequest, NextResponse} from "next/server";
 import {db} from "~/server/db"
 
 export async function GET(req: NextRequest){
@@ -25,6 +25,22 @@ export async function POST(req: NextRequest){
     try{
         const product = await db.product.create({data:{nome, preco, descricao}})
         return NextResponse.json({message:"product was created", product})
+    } catch(error){
+        if(error instanceof Error){
+            return NextResponse.json({error:error.message})
+        }
+    }
+
+}
+
+export async function PATCH(req: NextRequest){
+
+    const {id, nome, preco, descricao} = await req.json() as {id:number, nome : string, preco: number, descricao:string}
+
+    try{
+
+        const updatedProduct = await db.product.update({where:{id}, data:{nome, preco, descricao}})
+        return NextResponse.json({message:"product was altered", updatedProduct})
     } catch(error){
         if(error instanceof Error){
             return NextResponse.json({error:error.message})
