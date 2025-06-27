@@ -17,3 +17,18 @@ export async function GET(req: NextRequest){
         }
     }
 }
+
+export async function POST(req: NextRequest){
+
+    const { nome, preco, descricao } = await req.json() as {nome : string, preco: number, descricao:string}
+    
+    try{
+        const product = await db.product.create({data:{nome, preco, descricao}})
+        return NextResponse.json({message:"product was created", product})
+    } catch(error){
+        if(error instanceof Error){
+            return NextResponse.json({error:error.message})
+        }
+    }
+
+}
