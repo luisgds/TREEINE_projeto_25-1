@@ -48,3 +48,19 @@ export async function PATCH(req: NextRequest){
     }
 
 }
+
+export async function DELETE(req: NextRequest){
+
+    const {id} = await req.json() as {id:number}
+
+    try{
+        const deletedProduct = await db.product.delete({where:{id}})
+        return NextResponse.json({message:"product was deleted", deletedProduct})
+    } catch(error){
+        if(error instanceof Error){
+            return NextResponse.json({error:error.message})
+        }
+    }
+
+
+}
