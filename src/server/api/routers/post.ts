@@ -1,3 +1,4 @@
+import { create } from "domain";
 import { z } from "zod";
 
 import {
@@ -6,36 +7,26 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
+
+const ProductSchema = z.object({
+    id: z.number(),
+    nome: z.string(),
+    preco: z.number(),
+    descricao: z.string()
+})
+
 export const postRouter = createTRPCRouter({
-  hello: publicProcedure
-    .input(z.object({ text: z.string() }))
-    .query(({ input }) => {
-      return {
-        greeting: `Hello ${input.text}`,
-      };
-    }),
 
-  create: protectedProcedure
-    .input(z.object({ name: z.string().min(1) }))
-    .mutation(async ({ ctx, input }) => {
-      return ctx.db.post.create({
-        data: {
-          name: input.name,
-          createdBy: { connect: { id: ctx.session.user.id } },
-        },
-      });
-    }),
+  createProduct: publicProcedure.input(ProductSchema).query(async ({ input, ctx }) => {
 
-  getLatest: protectedProcedure.query(async ({ ctx }) => {
-    const post = await ctx.db.post.findFirst({
-      orderBy: { createdAt: "desc" },
-      where: { createdBy: { id: ctx.session.user.id } },
-    });
+    const {nome} = input;
+    const {preco} = input;
+    const {descricao} = input;
+    await ctx.db.product.create({data:{nome, preco, descricao}});
 
-    return post ?? null;
+    return;
+
   }),
 
-  getSecretMessage: protectedProcedure.query(() => {
-    return "you can now see this secret message!";
-  }),
-});
+
+})
