@@ -1,31 +1,57 @@
+"use client"
+
 import styles from "~/styles/navbar.module.css"
+import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMusicalNotes } from "react-icons/io5";
+import { FaBars, FaTimes } from "react-icons/fa";
 
-export  function NavBar(){
+export function NavBar() {
+  const [menuOpen, setMenuOpen] = useState(false);
 
-    return(
-        <nav className="flex justify-between items-center border-b-1 border-solid border-gray-400 h-12 max-[600]:justify-around">
-            <div className="flex pl-6 flex-row font-bold underline max-[600]:p-0">
-              <i  className="m-auto text-[#8f068f]"><IoMusicalNotes/></i>  <a className=" max-[500]:hidden ml-2" href="#"> MusicStore </a>
-            </div>
-            <div className="flex justify-between items-center">
-                <ul>
-                    <li className="inline-block pr-8 max-[600]:p-1">
-                        <a href="#">Inicio</a>
-                    </li>
-                    <li className="inline-block pr-8 max-[600]:p-1">
-                        <a href="#">Sobre nós</a>
-                    </li>
-                    <li className="inline-block pr-8 max-[600]:p-1">
-                        <a href="#">Produtos</a>
-                    </li>
-                </ul>   
-                <div className="flex flex-row flex-wrap border-solid border-black border-2 rounded mr-8 p-2 h-10/10">
-                   <i className="max-[500]:hidden m-auto"><AiOutlineLogin/></i><button>Login</button>
-                </div>
-            </div>
-        </nav>
-    );
+  return (
+    <nav className="flex flex-col border-b border-gray-400 md:flex-row md:items-center md:justify-between md:h-12">
+      {/* Topo */}
+      <div className="flex items-center justify-between px-4 py-2 md:p-0">
+        <div className="flex items-center font-bold underline text-[#8f068f]">
+          <IoMusicalNotes className="text-lg" />
+          <a className="ml-2 hidden max-[500px]:hidden md:block" href="#">
+            MusicStore
+          </a>
+        </div>
 
+        {/* Botão sanduíche: visível em telas pequenas */}
+        <button
+          className="text-2xl text-gray-700 md:hidden"
+          onClick={() => setMenuOpen(!menuOpen)}
+        >
+          {menuOpen ? <FaTimes /> : <FaBars />}
+        </button>
+      </div>
+
+      {/* Menu de links */}
+      <div
+        className={`${
+          menuOpen ? "flex" : "hidden"
+        } flex-col items-center gap-2 pb-4 px-6 md:flex md:flex-row md:items-center md:justify-between md:pb-0`}
+      >
+        <ul className="flex flex-col items-center gap-2 md:flex-row md:gap-6">
+          <li>
+            <a href="#" className="hover:text-[#8f068f]">Início</a>
+          </li>
+          <li>
+            <a href="#" className="hover:text-[#8f068f]">Sobre nós</a>
+          </li>
+          <li>
+            <a href="#" className="hover:text-[#8f068f]">Produtos</a>
+          </li>
+        </ul>
+
+        <div className="mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
+          <AiOutlineLogin className="hidden max-[500px]:hidden md:block" />
+          <button>Login</button>
+        </div>
+      </div>
+    </nav>
+  );
 }
