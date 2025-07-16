@@ -20,7 +20,7 @@ export function NavBar() {
           </a>
         </div>
 
-        {/* Botão sanduíche: visível em telas pequenas */}
+        {/* Botão sanduíche visível em telas pequenas */}
         <button
           className="text-2xl text-gray-700 md:hidden"
           onClick={() => setMenuOpen(!menuOpen)}
@@ -29,7 +29,6 @@ export function NavBar() {
         </button>
       </div>
 
-      {/* Menu de links */}
       <div
         className={`${
           menuOpen ? "flex" : "hidden"

@@ -1,13 +1,15 @@
 import { Footer } from "../_components/footer";
 import { NavBar } from "../_components/navbar";
+import { StatCard } from "../_components/login/statcard";
+import { PromiseCard } from "../_components/login/promise";
 import Link from "next/link";
 import { FaLock, FaRegUser, FaShoppingCart } from "react-icons/fa";
 import { MdOutlineMail } from "react-icons/md";
 
 export default function LoginPage() {
   return (
-    <main className="bg-purple-50">
-      <NavBar />
+    <main className="bg-purple-50 overflow-x-hidden">
+      <NavBar></NavBar>
       <div className="px-4 py-20">
         <section className="mb-12 text-center">
           <h1 className="mb-2 text-4xl font-bold">
@@ -112,43 +114,25 @@ export default function LoginPage() {
                 áudio com qualidade garantida e preços justos.
             </p>
 
-            <div className="flex justify-center gap-4 lg:justify-start">
-                <div className="rounded-lg border border-gray-200 bg-white px-20 py-2 text-center">
-                <p className="text-3xl font-bold text-[#8f068f]">500+</p>
-                <p className="text-gray-500">Produtos</p>
-                </div>
-                <div className="rounded-lg border border-gray-200 bg-white px-20 py-2 text-center">
-                <p className="text-3xl font-bold text-[#8f068f]">10k+</p>
-                <p className="text-gray-500">Clientes</p>
-                </div>
+            <div className="flex flex-col items-center justify-center gap-4 lg:flex-row lg:items-stretch lg:justify-start">
+              <StatCard title="500+" subtitle="Produtos" />
+              <StatCard title="10K+" subtitle="Clientes" />
             </div>
             </div>
 
-            <div className="flex w-full flex-col justify-center rounded-lg bg-gradient-to-br from-purple-400 to-blue-500 p-8 text-left text-white lg:w-1/2">
-            <h3 className="mb-4 text-2xl font-bold">Nossa Promessa</h3>
-            <ul className="space-y-3">
-                <li className="flex items-center">
-                <span className="mr-3 h-2 w-2 rounded-full bg-white/50"></span>
-                Qualidade garantida
-                </li>
-                <li className="flex items-center">
-                <span className="mr-3 h-2 w-2 rounded-full bg-white/50"></span>
-                Atendimento especializado
-                </li>
-                <li className="flex items-center">
-                <span className="mr-3 h-2 w-2 rounded-full bg-white/50"></span>
-                Preços competitivos
-                </li>
-                <li className="flex items-center">
-                <span className="mr-3 h-2 w-2 rounded-full bg-white/50"></span>
-                Entrega rápida e segura
-                </li>
-            </ul>
-            </div>
+            <PromiseCard
+              title="Nossa Promessa"
+              items={[
+                "Qualidade garantida",
+                "Atendimento especializado",
+                "Preços competitivos",
+                "Entrega rápida e segura",
+              ]}
+            />
         </div>
         </section>
       </div>
-      <Footer />
+      <Footer></Footer>
     </main>
   );
 }
