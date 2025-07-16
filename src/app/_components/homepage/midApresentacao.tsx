@@ -3,6 +3,7 @@ import { IoCartOutline } from "react-icons/io5";
 export function MidApresentacao() {
     return(
         <>
+        <div className="flex flex-wrap w-full">
             <div className="w-full h-full ">  {/* Apresentação detalhada 2º div */}
 
                 <section className="flex justify-center pb-8 pt-16 font-bold"> {/* Texto inicial */}
@@ -18,8 +19,8 @@ export function MidApresentacao() {
                 </section>
 
             </div>
-            <div className="p-8 flex justify-center">
-                <section className="min-w-64 m-auto justify-evenly flex flex-col p-8  w-6/10  h-8/10 max-[1024]:w-8/10"> {/* box apresentação detalhes  */}
+            <div className="p-8 flex flex-between flex-wrap">
+                <section className="min-w-64 m-auto justify-evenly flex flex-col p-8  w-6/10 "> {/* box apresentação detalhes  */}
                     <h3 className="text-3xl  pb-8 font-bold">
                         Mais de 20 anos dedicados à música
                     </h3>
@@ -35,7 +36,7 @@ export function MidApresentacao() {
                     </p>
                 </section>
                 {/* Box roxo */}
-                <div className=" min-w-48 m-auto justify-evenly flex flex-col p-8 items-center w-4/10 text-white rounded-md bg-[#8f068f] h-8/10 max-[1024]:w-8/10">
+                <section className="justify-evenly flex flex-col p-8 items-center w-4/10 text-white rounded-md bg-gradient-to-br from-purple-400 to-blue-500">
                     <h3 className="font-medium text-lg mb-4"> Nossa Promessa:</h3>
                     <ul className="float-left list-disc">
                         <li>Qualidade garantida</li>
@@ -43,8 +44,9 @@ export function MidApresentacao() {
                         <li>Preços competitivos</li>
                         <li>Entrega rápida</li>
                     </ul>
-                </div>
+                </section>
             </div>
+        </div>
         </>
     );
 }
