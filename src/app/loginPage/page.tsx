@@ -6,23 +6,19 @@ import {ProductRow} from "../_components/_componentsProductPage/productRow"
 import { PageContainer } from "../_components/_componentsProductPage/pagecontainer";
 import { PrimeiroTexto } from "../_components/_componentsProductPage/primeirotext";
 import { SegundoTexto } from "../_components/_componentsProductPage/segundotexto";
-import { api } from "~/trpc/server";
+import { LoginForm } from "../_components/componentsLoginPage/loginForm";
 
+export default function LoginPage(){
 
+    return(
+        <main>
+            <NavBar></NavBar>
+            <PageContainer>
+                <LoginForm></LoginForm>
+                <SegundoTexto></SegundoTexto>
+                <Footer></Footer>
+            </PageContainer>
+        </main>
+    );
 
-
-export default function HomePage() {
-
-
-  return (
-    <main>
-        <NavBar></NavBar>
-        <PageContainer>
-            <PrimeiroTexto></PrimeiroTexto>
-            <ProductRow></ProductRow>
-            <SegundoTexto></SegundoTexto>
-            <Footer></Footer>
-        </PageContainer>
-    </main>
-  );
 }
