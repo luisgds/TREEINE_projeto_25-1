@@ -19,7 +19,7 @@ export function MidApresentacao() {
                 </section>
 
             </div>
-            <div className="p-8 flex flex-between flex-wrap">
+            <div className="p-8 flex flex-col md:flex-row items-center">
                 <section className="min-w-64 m-auto justify-evenly flex flex-col p-8  w-6/10 "> {/* box apresentação detalhes  */}
                     <h3 className="text-3xl  pb-8 font-bold">
                         Mais de 20 anos dedicados à música
@@ -36,14 +36,17 @@ export function MidApresentacao() {
                     </p>
                 </section>
                 {/* Box roxo */}
-                <section className="justify-evenly flex flex-col p-8 items-center w-4/10 text-white rounded-md bg-gradient-to-br from-purple-400 to-blue-500">
-                    <h3 className="font-medium text-lg mb-4"> Nossa Promessa:</h3>
-                    <ul className="float-left list-disc">
-                        <li>Qualidade garantida</li>
-                        <li>Atendimento especializado</li>
-                        <li>Preços competitivos</li>
-                        <li>Entrega rápida</li>
-                    </ul>
+                {/* items-center w-4/10 md:justify-center justify-evenly flex flex-col */}
+                <section className="w-2/3 md:w-1/3 shadow shadow-slate-500 rounded-2xl justify-center align-middle flex bg-gradient-to-br from-purple-400 to-blue-500">
+                    <div className="text-white p-8 ">
+                        <h3 className="font-medium text-lg mb-4"> Nossa Promessa:</h3>
+                        <ul className="float-left list-disc">
+                            <li>Qualidade garantida</li>
+                            <li>Atendimento especializado</li>
+                            <li>Preços competitivos</li>
+                            <li>Entrega rápida</li>
+                        </ul>
+                    </div>
                 </section>
             </div>
         </div>

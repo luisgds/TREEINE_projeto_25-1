@@ -4,7 +4,7 @@ export function Topintroducao() {
     return(
             <div className="flex flex-wrap bg-purple-100 w-full h-full"> {/* div de apresentação */}
                 <section className="flex justify-center mb-4 pt-23 w-full"> {/* Texto inicial */}
-                    <h1 className="text-6xl font-bold">
+                    <h1 className="text-6xl font-bold mx-3">
                         Sua Música, <b className="text-purple-600">
                         Nossa Paixão
                     </b></h1>

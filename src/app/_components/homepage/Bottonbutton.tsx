@@ -8,8 +8,8 @@ export function Bottonbutton(){
                 <IoCartOutline style={{color: "white", fontSize: "1.5em"}}/>
                 <a className="pl-3 text-white" href="/productPage"> Ver produtos</a>
             </li>
-            <li className="bg-white border border-gray-200 rounded-lg p-3 flex items-center shadow-md">
-                <i className="max-[500]:hidden m-auto pr-2"><AiOutlineLogin/></i>
+            <li className="bg-white border  justify-center border-gray-200 rounded-lg p-3 flex items-center shadow-md">
+                <i className="max-[500]:hidden m-auto mr-4"><AiOutlineLogin/></i>
                 <a href="/login">Fazer login</a>
             </li>
         </div>
