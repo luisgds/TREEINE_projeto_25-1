@@ -1,56 +1,46 @@
 import { IoCartOutline } from "react-icons/io5";
 
 export function MidApresentacao() {
-    return(
-        <>
-        <div className="flex flex-wrap w-full">
-            <div className="w-full h-full ">  {/* Apresentação detalhada 2º div */}
-
-                <section className="flex justify-center pb-8 pt-16 font-bold"> {/* Texto inicial */}
-                    <h2 className="text-4xl ">
-                        Sobre nós
-                    </h2>
-                </section>
-
-                <section className="flex justify-center pb-8"> {/* Texto inicial */}
-                    <p className="text-xl text-gray-600">
-                        Conheça nossa história e paixão pela música
-                    </p>
-                </section>
-
+    return (
+        <div className="flex flex-col w-full bg-white px-6 py-16">
+            
+            {/* Título e subtítulo */}
+            <div className="text-center mb-12">
+                <h2 className="text-4xl font-bold mb-4">Sobre nós</h2>
+                <p className="text-xl text-gray-600">Conheça nossa história e paixão pela música</p>
             </div>
-            <div className="p-8 flex flex-col md:flex-row items-center">
-                <section className="min-w-64 m-auto justify-evenly flex flex-col p-8  w-6/10 "> {/* box apresentação detalhes  */}
-                    <h3 className="text-3xl  pb-8 font-bold">
-                        Mais de 20 anos dedicados à música
-                    </h3>
-                    <p className="text-l  text-gray-550 text-justify pb-6">
-                        Somos uma empresa familiar apaixona por música. Desde 2004, oferecemos os
+
+            {/* Conteúdo principal: texto + box roxo */}
+            <div className="flex flex-col md:flex-row items-start justify-center gap-8">
+
+                {/* Texto detalhado */}
+                <section className="w-full md:w-2/3 max-w-3xl p-6">
+                    <h3 className="text-3xl font-bold pb-6">Mais de 20 anos dedicados à música</h3>
+                    <p className="text-lg text-gray-600 text-justify pb-4">
+                        Somos uma empresa familiar apaixonada por música. Desde 2004, oferecemos os
                         melhores instrumentos musicais e equipamentos de áudio para músicos profissionais e 
                         amadores.
                     </p>
-                    <p className="text-l  text-gray-550 text-justify pb-6">
-                        Nossa missão é tornar a música acessível a todos, fornecendo produtos de qualidadede
-                        com o melhor atendimento e preços justos. Acreditamos que cada pessoas tem um
+                    <p className="text-lg text-gray-600 text-justify">
+                        Nossa missão é tornar a música acessível a todos, fornecendo produtos de qualidade
+                        com o melhor atendimento e preços justos. Acreditamos que cada pessoa tem um
                         músico dentro de si esperando para ser descoberto.
                     </p>
                 </section>
-                {/* Box roxo */}
-                {/* items-center w-4/10 md:justify-center justify-evenly flex flex-col */}
-                <section className="w-2/3 md:w-1/3 shadow shadow-slate-500 rounded-2xl justify-center align-middle flex bg-gradient-to-br from-purple-400 to-blue-500">
-                    <div className="text-white p-8 ">
-                        <h3 className="font-medium text-lg mb-4"> Nossa Promessa:</h3>
-                        <ul className="float-left list-disc">
-                            <li>Qualidade garantida</li>
-                            <li>Atendimento especializado</li>
-                            <li>Preços competitivos</li>
-                            <li>Entrega rápida</li>
-                        </ul>
-                    </div>
+
+                {/* Box roxo com promessas */}
+                <section className="w-full md:w-1/3 bg-gradient-to-br from-purple-400 to-blue-500 text-white rounded-2xl shadow-lg p-6">
+                    <h3 className="font-semibold text-lg mb-4">Nossa Promessa:</h3>
+                    <ul className="list-disc pl-5 space-y-2">
+                        <li>Qualidade garantida</li>
+                        <li>Atendimento especializado</li>
+                        <li>Preços competitivos</li>
+                        <li>Entrega rápida</li>
+                    </ul>
                 </section>
+
             </div>
         </div>
-        </>
     );
 }
 

@@ -1,16 +1,16 @@
 import { IoCartOutline } from "react-icons/io5";
 import { AiOutlineLogin } from "react-icons/ai";
 
-export function Bottonbutton(){
-    return(
-        <div className="flex flex-wrap justify-center p-32 w-full bg-purple-200">  {/* botoes inferiores*/}
-            <li className="flex items-center bg-purple-600 border-1 border-gray-200 rounded-lg shadow-md p-3 pr-4 mr-6">
-                <IoCartOutline style={{color: "white", fontSize: "1.5em"}}/>
-                <a className="pl-3 text-white" href="/productPage"> Ver produtos</a>
+export function Bottonbutton() {
+    return (
+        <div className="flex flex-wrap justify-center items-center gap-4 w-full bg-purple-200 px-6 py-12 pt-30 e pb-30">
+            <li className="flex items-center bg-purple-600 rounded-lg shadow-md px-5 py-3 hover:bg-purple-700 transition text-white">
+                <IoCartOutline className="text-xl" />
+                <a className="pl-3" href="/productPage">Ver produtos</a>
             </li>
-            <li className="bg-white border  justify-center border-gray-200 rounded-lg p-3 flex items-center shadow-md">
-                <i className="max-[500]:hidden m-auto mr-4"><AiOutlineLogin/></i>
-                <a href="/login">Fazer login</a>
+            <li className="flex items-center bg-white border border-gray-300 rounded-lg shadow-md px-5 py-3 hover:bg-gray-100 transition text-gray-700">
+                <AiOutlineLogin className="text-xl" />
+                <a className="pl-3" href="/login">Fazer login</a>
             </li>
         </div>
     );
