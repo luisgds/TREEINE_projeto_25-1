@@ -62,8 +62,8 @@ export function ProductForm({
     }
 
     return (
-        <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-        <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
+        <div onClick={onClose} className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+        <div onClick={e => e.stopPropagation()} className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
         <div className="border-4 border-gray-200 rounded-md p-4">
             <div className="flex justify-between">
                 <h3 className="font-bold text-lg" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}produto</h3>
