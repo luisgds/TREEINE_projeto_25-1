@@ -1,4 +1,5 @@
 import { z } from "zod";
+import { unlinkSync } from "fs";
 
 import {
   createTRPCRouter,
@@ -46,7 +47,8 @@ const productSchema = z.object({
   id: z.number().optional(),
   nome: z.string(),
   preco: z.coerce.number().min(0),
-  descricao: z.string()
+  descricao: z.string(),
+  imageId: z.number()
 })
 
 export const productRouter = createTRPCRouter({
@@ -68,7 +70,7 @@ export const productRouter = createTRPCRouter({
   // cria produto
   createProduct: publicProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
-    const product = await ctx.db.product.create({data:{descricao: input.descricao, nome: input.nome, preco: input.preco}})
+    const product = await ctx.db.product.create({data:{imageId:input.imageId ,descricao: input.descricao, nome: input.nome, preco: input.preco}})
     
     return product;
 
@@ -77,6 +79,9 @@ export const productRouter = createTRPCRouter({
   // deleta produto por id
   deleteProduct: publicProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
     const product = await ctx.db.product.delete({where:{id: input}});
+
+    const fileId = product.imageId;
+    unlinkSync(`./public/uploads/${fileId}.jpg`);
     return product;
   }),
 
