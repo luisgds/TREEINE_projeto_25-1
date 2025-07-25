@@ -2,6 +2,7 @@
 import { FaRegPenToSquare } from "react-icons/fa6";
 import { ProductForm } from "./productForm";
 import { useState } from "react";
+import { createPortal } from "react-dom";
 
 type ProductTableItemProps = {
     id: number;
@@ -24,8 +25,7 @@ export function ProductTableItem({
             <td className="pt-2 pb-2">{preco}</td>
             <td className="pt-2 pb-2">{descricao}</td>
             <td className="pt-2 pb-2 text-center"><button onClick={() => {setShowForm(true)}} className="border-2 rounded-md border-gray-200 bg-white p-2 pl-3 pr-3"><FaRegPenToSquare /></button></td>
-            {/* TODO: tirar esse form daqui para evitar erro */}
-            {showForm && <ProductForm onClose={() => setShowForm(false)} isCreate={false} id={id} initialNome={nome} initialPreco={preco} initialDescricao={descricao}/>}
+            {createPortal(showForm && <ProductForm onClose={() => setShowForm(false)} isCreate={false} id={id} initialNome={nome} initialPreco={preco} initialDescricao={descricao}/>, document.body)}
         </tr>
     )
 }

@@ -29,7 +29,7 @@ export function Table({nome}: {nome: string}) {
             </thead>
             <tbody>
                 {products.map((product) => {
-                    return <ProductTableItem key={product.id} id={product.id} nome={product.nome} preco={product.preco} descricao={product.descricao}></ProductTableItem>
+                    return <ProductTableItem key={product.id} id={product.id} nome={product.nome} preco={product.preco} descricao={product.descricao ?? undefined}></ProductTableItem>
                 })}
             </tbody>
         </table>
