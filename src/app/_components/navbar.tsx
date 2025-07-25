@@ -49,7 +49,8 @@ export function NavBar() {
 
         <div className="cursor-pointer mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
           <AiOutlineLogin className="hidden max-[500px]:hidden md:block" />
-          <Link href="login">Login</Link>
+        {/* <Link href="login">Login</Link>*/}
+          <button onClick={() => signIn("google")}>Login</button>
         </div>
       </div>
     </nav>
