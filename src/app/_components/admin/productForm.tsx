@@ -1,5 +1,6 @@
 "use client"
 
+import { error } from "console";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { api } from "~/trpc/react";
@@ -7,23 +8,24 @@ import { api } from "~/trpc/react";
 type ProductFormProps = {
     onClose: () => void,
     isCreate: boolean,
-    id?: number | undefined,
-    initialNome?: string,
-    initialPreco?: number,
-    initialDescricao?: string
+    data?: {
+        nome: string | null,
+        id: number | undefined,
+        preco: number | null,
+        descricao: string | null,
+        imageUrl: string | null
+    }
 }
 
 export function ProductForm({
     onClose, 
     isCreate,
-    id=undefined,
-    initialNome="",
-    initialPreco=0,
-    initialDescricao=""
+    data={nome:null, id:0, preco:0, descricao:"", imageUrl:""}
 } : ProductFormProps) {
-    const [nome, setNome] = useState(initialNome);
-    const [preco, setPreco] = useState(initialPreco);
-    const [descricao, setDescricao] = useState(initialDescricao);
+    const [nome, setNome] = useState(data["nome"] ?? "");
+    const [preco, setPreco] = useState(data["preco"] ?? 0);
+    const [descricao, setDescricao] = useState(data["descricao"] ?? "");
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const utils = api.useUtils();
 
@@ -50,17 +52,42 @@ export function ProductForm({
         }
     })
 
-    const handleSubmit = (e: React.FormEvent) => {
-        request.mutate({nome, preco, descricao, id});
+    const uploadImage = api.products.uploadImage.useMutation({
+        onSuccess: (data) => {
 
+        },
+        onError: (error) => {
+            console.error(error.message);
+        }
+    })
+
+    const fileToBase64 = (file: File) =>
+    new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+    });
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        let imageUrl = "";
+        if (imageFile) {
+            const base64 = await fileToBase64(imageFile);
+            const uploadResult = await uploadImage.mutateAsync({ file: base64 });
+            imageUrl = uploadResult.url;
+        }
+
+        request.mutate({nome, preco, descricao, id:data["id"], imageUrl});
     }
 
     const handleDelete = (e: React.MouseEvent) => {
-        if (id == undefined) {
+        if (data["id"] == undefined) {
             return
         }
-        del.mutate(id);
+        del.mutate(data["id"]);
     }
 
     return (
@@ -78,6 +105,8 @@ export function ProductForm({
                 <input name="preco" id="preco" value={preco} onChange={(e) => {setPreco(Number(e.target.value))}} type="number" placeholder="Ex: R$ 2.500" className="border-2 rounded-sm border-gray-300"></input>
                 <label htmlFor="descricao">Descrição</label>
                 <input name="descricao" id="descricao" value={descricao} onChange={(e) => {setDescricao(e.target.value)}} placeholder="Ex: Piano tradicional preto" className="border-2 rounded-sm border-gray-300"></input>
+                <label htmlFor="imagem">Imagem</label>
+                <input name="imagem" id="imagem" type="file" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}></input>
                 <div className="text-center">
                     <button className="bg-purple-600 text-white rounded-md w-full p-1">Salvar Produto</button>
                 </div>

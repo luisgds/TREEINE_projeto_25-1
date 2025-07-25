@@ -68,7 +68,7 @@ model Product{
     nome String
     preco Float
     descricao String?
-    imageId BigInt
+    imageUrl String?
     carts ShopCart[]
 }
 

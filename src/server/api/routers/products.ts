@@ -1,5 +1,6 @@
 import { z } from "zod";
 import { unlinkSync } from "fs";
+import cloudinary from "../../cloudinary"
 
 import {
   adminProcedure,
@@ -49,7 +50,7 @@ const productSchema = z.object({
   nome: z.string(),
   preco: z.coerce.number().min(0),
   descricao: z.string(),
-  imageId: z.number()
+  imageUrl: z.string().optional()
 })
 
 export const productRouter = createTRPCRouter({
@@ -71,25 +72,31 @@ export const productRouter = createTRPCRouter({
   // cria produto
   createProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
-    const product = await ctx.db.product.create({data:{imageId:input.imageId ,descricao: input.descricao, nome: input.nome, preco: input.preco}})
+    const product = await ctx.db.product.create({data:input})
     
     return product;
 
   }),
 
+  uploadImage: publicProcedure
+    .input(z.object({ file: z.string() }))
+    .mutation(async ({ input }) => {
+      const upload = await cloudinary.uploader.upload(input.file);
+      return { url: upload.secure_url };
+    }),
+
+
   // deleta produto por id
   deleteProduct: adminProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
     const product = await ctx.db.product.delete({where:{id: input}});
 
-    const fileId = product.imageId;
-    unlinkSync(`./public/uploads/${fileId}.jpg`);
     return product;
   }),
 
   // atualiza produto por id
   updateProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
-    const product = await ctx.db.product.update({where:{id: input.id}, data:{nome: input.nome, preco: input.preco, descricao: input.descricao}});
+    const product = await ctx.db.product.update({where:{id: input.id}, data:input});
     return product;
   }),
 
