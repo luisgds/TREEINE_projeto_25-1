@@ -39,10 +39,26 @@ export function ProductForm({
         onError: (error) => {
     }})
 
+    const del = api.products.deleteProduct.useMutation({
+        onSuccess: (data) => {
+            alert("Produto deletado");
+        },
+        onError: (error) => {
+
+        }
+    })
+
     const handleSubmit = (e: React.FormEvent) => {
         request.mutate({nome, preco, descricao, id});
 
         e.preventDefault();
+    }
+
+    const handleDelete = (e: React.MouseEvent) => {
+        if (id == undefined) {
+            return
+        }
+        del.mutate(id);
     }
 
     return (
@@ -64,6 +80,7 @@ export function ProductForm({
                     <button className="bg-purple-600 text-white rounded-md w-full p-1">Salvar Produto</button>
                 </div>
             </form>
+            {!isCreate && <button onClick={handleDelete} className="bg-red-700 text-white rounded-md w-full p-1 mt-1">Deletar Produto</button>}
         </div>
         </div>
         </div>
