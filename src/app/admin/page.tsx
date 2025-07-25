@@ -1,13 +1,13 @@
+import { BsBoxSeam } from "react-icons/bs";
+import { FaChartBar } from "react-icons/fa";
+import { GoPeople } from "react-icons/go";
+import { InfoCard } from "../_components/admin/infoCard"
+import { IoCartOutline } from "react-icons/io5";
+
 import { Footer } from "~/app/_components/footer"
 import { NavBar } from "~/app/_components/navbar"
-import { ManagementPanel } from "../_components/admin/managementPanel"
-import { InfoCard } from "../_components/admin/infoCard"
-import { FaQuestion } from "react-icons/fa";
-import { BsBoxSeam } from "react-icons/bs";
-import { GoPeople } from "react-icons/go";
-import { FaChartBar } from "react-icons/fa";
-import { IoCartOutline } from "react-icons/io5";
-import { ProductForm } from "../_components/admin/productForm";
+import { ProductManagementPanel } from "../_components/admin/productManagementPanel"
+import { UserManagementPanel } from "../_components/admin/userManagementPanel";
 
 export default function AdminPage() {
     return (
@@ -25,8 +25,8 @@ export default function AdminPage() {
                             <InfoCard text="Vendas Hoje" data="R$ 4,890" icon={<FaChartBar style={{color: "purple", fontSize: "1.5em"}}/>}></InfoCard>
                             <InfoCard text="Pedidos" data="23" icon={<IoCartOutline style={{color: "orange", fontSize: "1.5em"}}/>}></InfoCard>
                         </div>
-                        <ManagementPanel nome="Gestão de produtos"></ManagementPanel>
-                        <ManagementPanel nome="Gestão de Usuários"></ManagementPanel>
+                        <ProductManagementPanel nome="Gestão de produtos"></ProductManagementPanel>
+                        <UserManagementPanel nome="Gestão de Usuários"></UserManagementPanel>
                     </div>
                 </div>
             </main>

@@ -1,5 +1,5 @@
 "use client";
-import { Table } from "~/app/_components/admin/table"
+import { ProductTable } from "~/app/_components/admin/productTable"
 import { FaPlus } from "react-icons/fa6";
 import { ProductForm } from "./productForm";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 
-export function ManagementPanel({nome}: {nome: string}) {
+export function ProductManagementPanel({nome}: {nome: string}) {
     const [showForm, setShowForm] = useState(false);
 
     return (
@@ -17,9 +17,9 @@ export function ManagementPanel({nome}: {nome: string}) {
                 <button onClick={() => setShowForm(true)} className="bg-purple-500 text-white rounded-sm pl-2 pr-2 p-1 text-sm flex items-center justify-evenly shadow-sm"><FaPlus className="mr-2" />Adicionar Produto</button>
             </div>
             <div className="flex justify-center">
-                <Table nome={nome}></Table>
+                <ProductTable nome={nome}></ProductTable>
             </div>
-            {showForm && <ProductForm onClose={() => setShowForm(false)} />}
+            {showForm && <ProductForm onClose={() => setShowForm(false)} isCreate={true} />}
         </div>
     )
 }

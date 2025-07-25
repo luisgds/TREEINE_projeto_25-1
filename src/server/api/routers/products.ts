@@ -45,7 +45,7 @@ export const postRouter = createTRPCRouter({
 const productSchema = z.object({
   id: z.number().optional(),
   nome: z.string(),
-  preco: z.number(),
+  preco: z.coerce.number().min(0),
   descricao: z.string()
 })
 
