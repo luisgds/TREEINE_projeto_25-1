@@ -8,6 +8,7 @@ import { GoPeople } from "react-icons/go";
 import { FaChartBar } from "react-icons/fa";
 import { IoCartOutline } from "react-icons/io5";
 import { ProductForm } from "../_components/admin/productForm";
+import { UserManagementPanel } from "../_components/admin/userManagementPanel";
 
 export default function AdminPage() {
     return (
@@ -26,7 +27,7 @@ export default function AdminPage() {
                             <InfoCard text="Pedidos" data="23" icon={<IoCartOutline style={{color: "orange", fontSize: "1.5em"}}/>}></InfoCard>
                         </div>
                         <ManagementPanel nome="Gestão de produtos"></ManagementPanel>
-                        <ManagementPanel nome="Gestão de Usuários"></ManagementPanel>
+                        <UserManagementPanel nome="Gestão de Usuários"></UserManagementPanel>
                     </div>
                 </div>
             </main>
