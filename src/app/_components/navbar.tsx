@@ -5,6 +5,7 @@ import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMusicalNotes } from "react-icons/io5";
 import { FaBars, FaTimes } from "react-icons/fa";
+import Link from "next/link";
 
 export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -36,19 +37,19 @@ export function NavBar() {
       >
         <ul className="flex flex-col items-center gap-2 md:flex-row md:gap-6">
           <li>
-            <a href="#" className="hover:text-[#8f068f]">Início</a>
+            <Link href="/" className="hover:text-[#8f068f]">Início</Link>
           </li>
           <li>
-            <a href="#" className="hover:text-[#8f068f]">Sobre nós</a>
+            <Link href="/loginPage" className="hover:text-[#8f068f]">Sobre nós</Link>
           </li>
           <li>
-            <a href="#" className="hover:text-[#8f068f]">Produtos</a>
+            <Link href="/productPage" className="hover:text-[#8f068f]">Produtos</Link>
           </li>
         </ul>
 
         <div className="mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
           <AiOutlineLogin className="hidden max-[500px]:hidden md:block" />
-          <button>Login</button>
+          <Link href="/login">Login</Link>
         </div>
       </div>
     </nav>
