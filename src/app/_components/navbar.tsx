@@ -1,11 +1,11 @@
 "use client"
 
-import styles from "~/styles/navbar.module.css"
 import { useState } from "react";
 import { AiOutlineLogin } from "react-icons/ai";
 import { IoMusicalNotes } from "react-icons/io5";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
+import { signIn } from "next-auth/react";
 
 export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
@@ -40,16 +40,16 @@ export function NavBar() {
             <Link href="/" className="hover:text-[#8f068f]">Início</Link>
           </li>
           <li>
-            <Link href="/loginPage" className="hover:text-[#8f068f]">Sobre nós</Link>
+            <a href="/loginPage" className="hover:text-[#8f068f]">Sobre nós</a>
           </li>
           <li>
-            <Link href="/productPage" className="hover:text-[#8f068f]">Produtos</Link>
+            <a href="/productPage" className="hover:text-[#8f068f]">Produtos</a>
           </li>
         </ul>
 
         <div className="mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
           <AiOutlineLogin className="hidden max-[500px]:hidden md:block" />
-          <Link href="/login">Login</Link>
+          <button onClick={() => signIn("google")} >Login</button>
         </div>
       </div>
     </nav>
