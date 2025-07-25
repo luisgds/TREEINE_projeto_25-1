@@ -1,5 +1,5 @@
 "use client";
-import { ProductTable } from "~/app/_components/admin/table"
+import { ProductTable } from "~/app/_components/admin/productTable"
 import { FaPlus } from "react-icons/fa6";
 import { ProductForm } from "./productForm";
 import { useState } from "react";
@@ -7,7 +7,7 @@ import { useState } from "react";
 
 
 
-export function ManagementPanel({nome}: {nome: string}) {
+export function ProductManagementPanel({nome}: {nome: string}) {
     const [showForm, setShowForm] = useState(false);
 
     return (
