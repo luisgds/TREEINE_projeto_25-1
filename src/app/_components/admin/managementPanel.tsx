@@ -19,7 +19,7 @@ export function ManagementPanel({nome}: {nome: string}) {
             <div className="flex justify-center">
                 <Table nome={nome}></Table>
             </div>
-            {showForm && <ProductForm onClose={() => setShowForm(false)} />}
+            {showForm && <ProductForm onClose={() => setShowForm(false)} isCreate={true} />}
         </div>
     )
 }
