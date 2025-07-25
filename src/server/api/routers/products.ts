@@ -2,6 +2,7 @@ import { z } from "zod";
 import { unlinkSync } from "fs";
 
 import {
+  adminProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
@@ -68,7 +69,7 @@ export const productRouter = createTRPCRouter({
   }),
 
   // cria produto
-  createProduct: publicProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
+  createProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
     const product = await ctx.db.product.create({data:{imageId:input.imageId ,descricao: input.descricao, nome: input.nome, preco: input.preco}})
     
@@ -77,7 +78,7 @@ export const productRouter = createTRPCRouter({
   }),
 
   // deleta produto por id
-  deleteProduct: publicProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
+  deleteProduct: adminProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
     const product = await ctx.db.product.delete({where:{id: input}});
 
     const fileId = product.imageId;
@@ -86,7 +87,7 @@ export const productRouter = createTRPCRouter({
   }),
 
   // atualiza produto por id
-  updateProduct: publicProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
+  updateProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
     const product = await ctx.db.product.update({where:{id: input.id}, data:{nome: input.nome, preco: input.preco, descricao: input.descricao}});
     return product;
