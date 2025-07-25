@@ -51,6 +51,7 @@ model User {
     accounts      Account[]
     sessions      Session[]
     carts         ShopCart[]
+    role          String @default("user")
 }
 
 model VerificationToken {
