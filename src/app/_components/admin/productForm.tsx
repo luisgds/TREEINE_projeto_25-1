@@ -1,11 +1,36 @@
+"use client"
+
+import { useState } from "react";
 import { IoClose } from "react-icons/io5";
+import { api } from "~/trpc/react";
 
 export function ProductForm({
     onClose
 } : {
     onClose: () => void
 } ) {
+    const [nome, setNome] = useState("");
+    const [preco, setPreco] = useState(0);
+    const [descricao, setDescricao] = useState("");
+    const [estoque, setEstoque] = useState("");
+    const [categoria, setCategoria] = useState("");
+
+    const create = api.products.createProduct.useMutation({ 
+        onSuccess: (data) => {
+            alert("Produto criado");
+    },  
+        onError: (error) => {
+
+    }})
+
+    const handleSubmit = (e: React.FormEvent) => {
+        create.mutate({nome, preco, descricao});
+        e.preventDefault();
+
+    }
+
     return (
+
         <div className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
         <div className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
         <div className="border-4 border-gray-200 rounded-md p-4">
@@ -13,11 +38,11 @@ export function ProductForm({
                 <h3 className="font-bold text-lg" >Adicionar Novo Produto</h3>
                 <button onClick={onClose}><IoClose className="text-2xl"/></button>
             </div>
-            <form className="label *:block [&_input]:w-full [&_input]:mb-2">
+            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2">
                 <label htmlFor="nome">Nome do Produto</label>
-                <input name="nome" id="nome" placeholder="Ex: Piano Yamaha" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="nome" id="nome" onChange={(e) => {setNome(e.target.value)}} placeholder="Ex: Piano Yamaha" className="border-2 rounded-sm border-gray-300"></input>
                 <label htmlFor="preco">Preço</label>
-                <input name="preco" id="preco" placeholder="Ex: R$ 2.500" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="preco" id="preco" onChange={(e) => {setPreco(e.target.value)}} type="number" placeholder="Ex: R$ 2.500" className="border-2 rounded-sm border-gray-300"></input>
                 <label htmlFor="estoque">Estoque</label>
                 <input name="estoque" id="estoque" placeholder="Ex: 10" className="border-2 rounded-sm border-gray-300"></input>
                 <label htmlFor="categoria">Categoria</label>
