@@ -25,23 +25,25 @@ export function UserForm({
     const [email, setEmail] = useState(data["email"] ?? "");
     const [image, setImage] = useState(data["image"] ?? "");
 
+    const utils = api.useUtils();
+
     const request = isCreate ? 
     api.user.create.useMutation({ 
         onSuccess: (data) => {
-            alert("Usuário criado");
+            utils.user.getAll.invalidate();
     },  
         onError: (error) => {
     }}) : 
     api.user.update.useMutation({
         onSuccess: (data) => {
-            alert("Usuário atualizado");
+            utils.user.getAll.invalidate();
     },  
         onError: (error) => {
     }})
 
     const del = api.user.delete.useMutation({
         onSuccess: (data) => {
-            alert("Usuário deletado");
+            utils.user.getAll.invalidate();
         },
         onError: (error) => {
 
