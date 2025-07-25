@@ -1,6 +1,22 @@
+import { api } from "~/trpc/react";
 import { ProductTableItem } from "./productTableItem"
+import { procedureTypes } from "@trpc/server/unstable-core-do-not-import";
 
 export function Table({nome}: {nome: string}) {
+    const {data: products, isLoading, error} = api.products.getAllProducts.useQuery()
+
+    if (isLoading) {
+        return <div>Carregando...</div>;
+    }
+
+    if (error) {
+        return <div>Erro ao carregar: {error.message}</div>;
+    }
+    
+    if (!products || products.length === 0) {
+        return <div>Nenhum produto.</div>;
+    }
+
     return (
         <table className="w-95/100">
             <thead>
@@ -13,9 +29,9 @@ export function Table({nome}: {nome: string}) {
                 </tr>
             </thead>
             <tbody>
-                <ProductTableItem nome="Piano" preco="10 reais"></ProductTableItem>
-                <ProductTableItem nome="Piano" preco="10 reais"></ProductTableItem>
-                <ProductTableItem nome="Piano" preco="10 reais"></ProductTableItem>
+                {products.map((product) => {
+                    return <ProductTableItem key={product.id} nome={product.nome} preco={product.preco}></ProductTableItem>
+                })}
             </tbody>
         </table>
     );
