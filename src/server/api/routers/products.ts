@@ -68,9 +68,9 @@ export const productRouter = createTRPCRouter({
   // cria produto
   createProduct: publicProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
-    const product = await ctx.db.product.create({data:{descricao: input.descricao, nome: input.nome, preco: input.preco}})
+    //const product = await ctx.db.product.create({data:{descricao: input.descricao, nome: input.nome, preco: input.preco}})
     
-    return product;
+    //return product;
 
   }),
 
