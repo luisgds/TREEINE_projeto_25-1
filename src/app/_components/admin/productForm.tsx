@@ -10,10 +10,8 @@ export function ProductForm({
     onClose: () => void
 } ) {
     const [nome, setNome] = useState("");
-    const [preco, setPreco] = useState(0);
+    const [preco, setPreco] = useState(1);
     const [descricao, setDescricao] = useState("");
-    const [estoque, setEstoque] = useState("");
-    const [categoria, setCategoria] = useState("");
 
     const create = api.products.createProduct.useMutation({ 
         onSuccess: (data) => {
@@ -43,10 +41,8 @@ export function ProductForm({
                 <input name="nome" id="nome" onChange={(e) => {setNome(e.target.value)}} placeholder="Ex: Piano Yamaha" className="border-2 rounded-sm border-gray-300"></input>
                 <label htmlFor="preco">Preço</label>
                 <input name="preco" id="preco" onChange={(e) => {setPreco(e.target.value)}} type="number" placeholder="Ex: R$ 2.500" className="border-2 rounded-sm border-gray-300"></input>
-                <label htmlFor="estoque">Estoque</label>
-                <input name="estoque" id="estoque" placeholder="Ex: 10" className="border-2 rounded-sm border-gray-300"></input>
-                <label htmlFor="categoria">Categoria</label>
-                <input name="categoria" id="categoria" placeholder="Ex: Pianos" className="border-2 rounded-sm border-gray-300"></input>
+                <label htmlFor="descricao">Descrição</label>
+                <input name="descricao" id="descricao" onChange={(e) => {setDescricao(e.target.value)}} placeholder="Ex: Piano tradicional preto" className="border-2 rounded-sm border-gray-300"></input>
                 <div className="text-center">
                     <button className="bg-purple-600 text-white rounded-md w-full p-1">Salvar Produto</button>
                 </div>

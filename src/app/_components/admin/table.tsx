@@ -23,14 +23,13 @@ export function Table({nome}: {nome: string}) {
                 <tr className="text-gray-500 text-left font-semibold">
                     <th scope="col" className="w-3/10 pb-2">Nome</th>
                     <th scope="col">Preço</th>
-                    <th scope="col">Estoque</th>
-                    <th scope="col">Categoria</th>
+                    <th scope="col">Descrição</th>
                     <th scope="col" className="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {products.map((product) => {
-                    return <ProductTableItem key={product.id} nome={product.nome} preco={product.preco}></ProductTableItem>
+                    return <ProductTableItem key={product.id} nome={product.nome} preco={product.preco} descricao={product.descricao}></ProductTableItem>
                 })}
             </tbody>
         </table>
