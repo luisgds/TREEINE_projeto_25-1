@@ -40,16 +40,16 @@ export function NavBar() {
             <Link href="/" className="hover:text-[#8f068f]">Início</Link>
           </li>
           <li>
-            <a href="/loginPage" className="hover:text-[#8f068f]">Sobre nós</a>
+            <Link href="/loginPage" className="hover:text-[#8f068f]">Sobre nós</Link>
           </li>
           <li>
-            <a href="/productPage" className="hover:text-[#8f068f]">Produtos</a>
+            <Link href="/productPage" className="hover:text-[#8f068f]">Produtos</Link>
           </li>
         </ul>
 
-        <div className="mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
+        <div className="cursor-pointer mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
           <AiOutlineLogin className="hidden max-[500px]:hidden md:block" />
-          <button onClick={() => signIn("google")} >Login</button>
+          <Link href="login">Login</Link>
         </div>
       </div>
     </nav>
