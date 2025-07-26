@@ -1,5 +1,7 @@
 import Link from "next/link";
 import { FaArrowLeft } from "react-icons/fa";
+import { PageToGo } from "./retornoProdutos";
+import { Price } from "./preco";
 
 type ResumoPedidoProps = {
   subtotal: number;
@@ -18,10 +20,7 @@ export function ResumoPedido({ subtotal }: ResumoPedidoProps) {
         <div className="flex justify-between text-gray-600">
           <span>Subtotal</span>
           <span>
-            {new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(subtotal)}
+            <Price valor={subtotal} moeda="BRL" />
           </span>
         </div>
         <div className="flex justify-between text-gray-600">
@@ -32,20 +31,15 @@ export function ResumoPedido({ subtotal }: ResumoPedidoProps) {
         <div className="flex justify-between border-t pt-4 text-lg font-bold text-gray-800">
           <span>Total</span>
           <span>
-            {new Intl.NumberFormat("pt-BR", {
-              style: "currency",
-              currency: "BRL",
-            }).format(total)}
+            <Price valor={subtotal} moeda="BRL" />
           </span>
         </div>
       </div>
       <button className="mt-6 w-full rounded-md bg-purple-600 py-3 font-semibold text-white shadow-md transition hover:bg-purple-700">
         Finalizar Compra
       </button>
-      <Link href="/productPage" className="mt-4 flex items-center justify-center text-gray-600 hover:text-purple-600">
-        <FaArrowLeft className="mr-2" />
-        Continuar Comprando
-      </Link>
+      <div className="mt-4 flex w-full justify-center"></div>
+        <PageToGo rota="/productPage" texto="Continuar Comprando" />
     </div>
   );
 }

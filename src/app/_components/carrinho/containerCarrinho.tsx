@@ -5,6 +5,7 @@ import { useState } from "react";
 import { FaArrowLeft } from "react-icons/fa";
 import { Item } from "./Item";
 import { ResumoPedido } from "./ResumoPedido";
+import { PageToGo } from "./retornoProdutos";
 
 // exemplo
 const initialItems = [
@@ -54,10 +55,7 @@ export function Carrinho() {
   return (
     <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 lg:px-8">
       <div className="mb-8">
-        <Link href="/productPage" className="inline-flex items-center text-gray-600 hover:text-purple-600">
-          <FaArrowLeft className="mr-2" />
-          Continuar Comprando
-        </Link>
+        <PageToGo rota="/productPage" texto="Continuar Comprando" />
       </div>
 
       <div className="grid grid-cols-1 gap-8 lg:grid-cols-3">
@@ -68,7 +66,6 @@ export function Carrinho() {
 
           <div className="mt-8 space-y-4">
             {items.map((item) => (
-              // --- PASSANDO AS FUNÇÕES COMO PROPS ---
               <Item
                 key={item.id}
                 item={item}
@@ -78,8 +75,6 @@ export function Carrinho() {
             ))}
           </div>
         </div>
-
-        {/* Coluna do Resumo */}
         <div className="lg:col-span-1">
           <ResumoPedido subtotal={subtotal} />
         </div>
