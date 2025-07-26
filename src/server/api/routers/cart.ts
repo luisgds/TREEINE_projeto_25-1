@@ -5,6 +5,7 @@ import {
   protectedProcedure,
   publicProcedure,
 } from "~/server/api/trpc";
+import { productRouter } from "./products";
 
 /*
     model ShopCart{
@@ -38,6 +39,29 @@ export const cartRouter = createTRPCRouter({
             return cart;
 
         }),
+
+    getPreco: publicProcedure.input(z.string()).query(async ({ input, ctx }) => {
+
+            let preco = 0;
+            let ProductsInCart = await ctx.db.shopCart.findMany({where:{user_id:input}})
+            const products = await ctx.db.product.findMany({where:{id:{in: ProductsInCart.map(product => product.id)}}})
+
+            let dicionario = new Map<number, number>() // dicionario item-preco
+            
+            products.forEach( (item) =>        
+                dicionario.set(item.id, item.preco)
+            )
+
+            let soma = 0;
+
+            ProductsInCart.forEach( (registro) =>
+                soma = soma + dicionario.get(registro.id)*(registro.quantity)
+            )
+
+            return soma;
+
+        }),
+
     create: protectedProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
 
             const check = await ctx.db.shopCart.findFirst({where:{user_id:input.user_id, }})
