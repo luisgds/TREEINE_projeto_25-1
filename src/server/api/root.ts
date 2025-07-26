@@ -9,7 +9,8 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  */
 export const appRouter = createTRPCRouter({
   products: productRouter,
-  user: userRouter
+  user: userRouter,
+  cart : cartRouter
 });
 
 // export type definition of API
