@@ -1,4 +1,4 @@
-import { FaShoppingCart, FaTrash } from "react-icons/fa";
+import { FaTrash } from "react-icons/fa";
 import { UpdateButton } from "./botao_qtd";
 import Image from "next/image"
 
@@ -42,7 +42,6 @@ export function Item({ item, onUpdateQuantity, onRemove }: ItemProps) {
         onDecrement={() => onUpdateQuantity(item.id, item.qtd - 1)}
       />
       <button 
-        // 👇 Chame a função onRemove
         onClick={() => onRemove(item.id)}
         className="text-gray-400 hover:text-red-500">
         <FaTrash size={20} />
