@@ -25,20 +25,20 @@ const cartSchema = z.object({
 })
 
 export const cartRouter = createTRPCRouter({
-    getAll: publicProcedure.query(async ({ ctx }) => {
+    getAll: protectedProcedure.query(async ({ ctx }) => {
 
             const carts = await ctx.db.shopCart.findMany();
             return carts;
 
         }),
-    get: publicProcedure.input(z.number()).query(async ({ input, ctx }) => {
+    get: protectedProcedure.input(z.number()).query(async ({ input, ctx }) => {
 
             const id = input;
             const cart = await ctx.db.shopCart.findUnique({where:{id: id}});
             return cart;
 
         }),
-    create: publicProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
+    create: protectedProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
 
             const check = await ctx.db.shopCart.findFirst({where:{user_id:input.user_id, }})
 
@@ -50,13 +50,13 @@ export const cartRouter = createTRPCRouter({
             const cart = await ctx.db.shopCart.create({data: input})
             return cart;
         }),
-    delete: publicProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
+    delete: protectedProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
 
             const cart = await ctx.db.shopCart.delete({where:{id: input}});
             return cart;
 
         }),
-    update: publicProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
+    update: protectedProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
 
             const cart = await ctx.db.shopCart.update({where:{id: input.id}, data: input});
             return cart;
