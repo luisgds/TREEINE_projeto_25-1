@@ -1,7 +1,24 @@
-import styles from "~/productPageStyles/card.module.css"
+"use client"
+import { api } from "~/trpc/react";
+import { useSession } from "next-auth/react";
+import { redirect } from "next/navigation";
 
 
-export function Card({nome, preco}:{nome:string, preco:number}){
+export function Card({nome, preco, id}:{id:number ,nome:string, preco:number}){
+    const {data:session} = useSession()
+    const mutation = api.cart.create.useMutation()
+
+    const handleCompra = () =>{
+
+        console.log("valor do id:",id )
+        if(!session || !session.user){
+            redirect("/login");
+        }
+
+        mutation.mutate({user_id:session.user.id, quantity:1, product_id:id})
+        
+    }
+
     return (
         <div className="m-4 border-2 border-solid border-black rounded-xl w-72 table flex-col p-4 max-h-80 max-[1024]:m-4">
 
@@ -13,7 +30,7 @@ export function Card({nome, preco}:{nome:string, preco:number}){
                 <strong><h1> {nome}</h1></strong>
                 <h1 className="pb-4 text-[#8f068f]"> R$ {preco}</h1>
 
-                <button className="bg-[#8f068f] p-2 text-white text-center rounded w-9/10">Botao de compra</button>
+                <button onClick={() => handleCompra()} className="bg-[#8f068f] p-2 text-white text-center rounded w-9/10">Comprar</button>
             </div>
 
         </div>
