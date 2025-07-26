@@ -29,6 +29,11 @@ export const userRouter = createTRPCRouter({
             const user = await ctx.db.user.findUnique({where:{id: id}});
             return user;
         }),
+    countUsers: publicProcedure
+        .query(async ({ ctx }) => {
+            const count = await ctx.db.user.count({where: {role:"user"}});
+            return count;
+        }),
     delete: publicProcedure
         .input(z.string())
         .mutation(async ({ input, ctx }) => {
