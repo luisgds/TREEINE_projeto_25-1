@@ -1,5 +1,6 @@
 import { productRouter } from "~/server/api/routers/products";
 import { userRouter } from "./routers/user";
+import { cartRouter } from "./routers/cart";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**

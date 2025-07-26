@@ -25,34 +25,41 @@ const cartSchema = z.object({
 })
 
 export const cartRouter = createTRPCRouter({
-    getAll: publicProcedure
-        .query(async ({ ctx }) => {
-            const carts = await ctx.db.cart.findMany();
+    getAll: publicProcedure.query(async ({ ctx }) => {
+
+            const carts = await ctx.db.shopCart.findMany();
             return carts;
+
         }),
-    get: publicProcedure
-        .input(z.number())
-        .query(async ({ input, ctx }) => {
+    get: publicProcedure.input(z.number()).query(async ({ input, ctx }) => {
+
             const id = input;
-            const cart = await ctx.db.cart.findUnique({where:{id: id}});
+            const cart = await ctx.db.shopCart.findUnique({where:{id: id}});
+            return cart;
+
+        }),
+    create: publicProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
+
+            const check = await ctx.db.shopCart.findFirst({where:{user_id:input.user_id, }})
+
+            // caso já haja um registro não precisamos criar um novo
+            if(check){
+                return;
+            }
+
+            const cart = await ctx.db.shopCart.create({data: input})
             return cart;
         }),
-    create: publicProcedure
-        .input(cartSchema)
-        .mutation(async ({ input, ctx }) => {
-            const cart = await ctx.db.cart.create({data: input})
+    delete: publicProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
+
+            const cart = await ctx.db.shopCart.delete({where:{id: input}});
             return cart;
+
         }),
-    delete: publicProcedure
-        .input(z.number())
-        .mutation(async ({ input, ctx }) => {
-            const cart = await ctx.db.cart.delete({where:{id: input}});
+    update: publicProcedure.input(cartSchema).mutation(async ({ input, ctx }) => {
+
+            const cart = await ctx.db.shopCart.update({where:{id: input.id}, data: input});
             return cart;
-        }),
-    update: publicProcedure
-        .input(cartSchema)
-        .mutation(async ({ input, ctx }) => {
-            const cart = await ctx.db.cart.update({where:{id: input.id}, data: input});
-            return cart;
+
     }),
 });
