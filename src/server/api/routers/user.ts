@@ -6,26 +6,16 @@ import {
   publicProcedure,
 } from "~/server/api/trpc";
 
-// model User {
-//     id            String    @id @default(cuid())
-//     name          String?
-//     email         String?   @unique
-//     emailVerified DateTime?
-//     image         String?
-//     accounts      Account[]
-//     sessions      Session[]
-//     carts         ShopCart[]
-// }
-
-// Schema feito com base na model acima. TODO: falta adicionar os fields relacionais
-const userSchema = z.object({
-  id: z.string().optional(),
+const userUpdateSchema = z.object({
+  id: z.string(),
   name: z.string().optional(),
   email: z.string().optional(),
-  emailVerified: z.date().optional(),
-  image: z.string().optional()
+  image: z.string().optional(),
+  role: z.string().optional()
 })
 
+// Usuários são criados pelo next auth
+// por isso aqui não temos user.create
 export const userRouter = createTRPCRouter({
     getAll: publicProcedure
         .query(async ({ ctx }) => {
@@ -39,12 +29,6 @@ export const userRouter = createTRPCRouter({
             const user = await ctx.db.user.findUnique({where:{id: id}});
             return user;
         }),
-    create: publicProcedure
-        .input(userSchema)
-        .mutation(async ({ input, ctx }) => {
-            const user = await ctx.db.user.create({data: input})
-            return user;
-        }),
     delete: publicProcedure
         .input(z.string())
         .mutation(async ({ input, ctx }) => {
@@ -52,7 +36,7 @@ export const userRouter = createTRPCRouter({
             return user;
         }),
     update: publicProcedure
-        .input(userSchema)
+        .input(userUpdateSchema)
         .mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.update({where:{id: input.id}, data: input});
             return user;

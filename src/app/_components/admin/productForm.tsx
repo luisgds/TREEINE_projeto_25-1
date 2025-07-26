@@ -95,18 +95,18 @@ export function ProductForm({
         <div onMouseDown={e => e.stopPropagation()} className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
         <div className="border-4 border-gray-200 rounded-md p-4">
             <div className="flex justify-between">
-                <h3 className="font-bold text-lg" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}produto</h3>
+                <h3 className="font-bold text-lg mb-1" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}produto</h3>
                 <button onClick={onClose}><IoClose className="text-2xl"/></button>
             </div>
-            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2">
+            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2 [&_input]:border-2 [&_input]:rounded-sm [&_input]:border-gray-300 [&_input]:p-0.5">
                 <label htmlFor="nome">Nome do Produto</label>
-                <input name="nome" id="nome" value={nome} onChange={(e) => {setNome(e.target.value)}} placeholder="Ex: Piano Yamaha" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="nome" id="nome" value={nome} onChange={(e) => {setNome(e.target.value)}} placeholder="Ex: Piano Yamaha"></input>
                 <label htmlFor="preco">Preço</label>
-                <input name="preco" id="preco" value={preco} onChange={(e) => {setPreco(Number(e.target.value))}} type="number" placeholder="Ex: R$ 2.500" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="preco" id="preco" value={preco} onChange={(e) => {setPreco(Number(e.target.value))}} type="number" placeholder="Ex: R$ 2.500"></input>
                 <label htmlFor="descricao">Descrição</label>
-                <input name="descricao" id="descricao" value={descricao} onChange={(e) => {setDescricao(e.target.value)}} placeholder="Ex: Piano tradicional preto" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="descricao" id="descricao" value={descricao} onChange={(e) => {setDescricao(e.target.value)}} placeholder="Ex: Piano tradicional preto"></input>
                 <label htmlFor="imagem">Imagem</label>
-                <input name="imagem" id="imagem" type="file" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)}></input>
+                <input name="imagem" id="imagem" type="file" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)} className="cursor-pointer file:bg-gray-200 !p-0 file:p-1 file:cursor-pointer"></input>
                 <div className="text-center">
                     <button className="bg-purple-600 text-white rounded-md w-full p-1">Salvar Produto</button>
                 </div>

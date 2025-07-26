@@ -9,32 +9,29 @@ type UserFormProps = {
     isCreate: boolean,
     data?: {
         name: string | null,
-        id: string | undefined,
+        id: string,
         email: string | null,
         emailVerified: Date | null,
         image: string | null
+        role: string
 }
 }
 
 export function UserForm({
     onClose, 
     isCreate,
-    data={name:"", id:undefined, email:"", emailVerified:null, image:""}
+    data={name:"", id:"", email:"", emailVerified:null, image:"", role:""}
 } : UserFormProps) {
     const [name, setName] = useState(data["name"] ?? "");
     const [email, setEmail] = useState(data["email"] ?? "");
-    const [image, setImage] = useState(data["image"] ?? "");
+    const [role, setRole] = useState(data["role"] ?? "");
 
     const utils = api.useUtils();
 
-    const request = isCreate ? 
-    api.user.create.useMutation({ 
-        onSuccess: (data) => {
-            utils.user.getAll.invalidate();
-    },  
-        onError: (error) => {
-    }}) : 
-    api.user.update.useMutation({
+    if (isCreate) {
+        console.error("Não pode-se criar usuários manualmente");
+    }
+    const request = api.user.update.useMutation({
         onSuccess: (data) => {
             utils.user.getAll.invalidate();
     },  
@@ -51,7 +48,7 @@ export function UserForm({
     })
 
     const handleSubmit = (e: React.FormEvent) => {
-        request.mutate({name, email, image, id:data["id"]});
+        request.mutate({id:data["id"], name, email, role});
 
         e.preventDefault();
     }
@@ -71,13 +68,13 @@ export function UserForm({
                 <h3 className="font-bold text-lg" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}usuário</h3>
                 <button onClick={onClose}><IoClose className="text-2xl"/></button>
             </div>
-            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2">
+            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2 [&_input]:border-2 [&_input]:rounded-sm [&_input]:border-gray-300 [&_input]:p-0.5">
                 <label htmlFor="name">Nome do Usuário</label>
-                <input name="name" id="name" value={name} onChange={(e) => {setName(e.target.value)}} placeholder="Ex: João" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="name" id="name" value={name} onChange={(e) => {setName(e.target.value)}} placeholder="Ex: João"></input>
                 <label htmlFor="email">Email</label>
-                <input name="email" id="email" value={email} onChange={(e) => {setEmail(e.target.value)}} type="email" placeholder="exemple@gmail.com" className="border-2 rounded-sm border-gray-300"></input>
-                <label htmlFor="image">URL de Imagem</label>
-                <input name="image" id="image" value={image} onChange={(e) => {setImage(e.target.value)}} type="url" placeholder="https://image.com" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="email" id="email" value={email} onChange={(e) => {setEmail(e.target.value)}} type="email" placeholder="exemple@gmail.com"></input>
+                <label htmlFor="role">Role</label>
+                <input name="role" id="role" value={role} onChange={(e) => {setRole(e.target.value)}} type="url" placeholder="admin"></input>
                 <div className="text-center">
                     <button className="bg-green-500 text-white rounded-md w-full p-1">Salvar usuário</button>
                 </div>

@@ -23,7 +23,7 @@ export function UserTable({nome}: {nome: string}) {
                 <tr className="text-gray-500 text-left font-semibold">
                     <th scope="col" className="w-3/10 pb-2">Nome</th>
                     <th scope="col">Email</th>
-                    <th scope="col">Imagem</th>
+                    <th scope="col">Role</th>
                     <th scope="col" className="text-center">Ações</th>
                 </tr>
             </thead>
