@@ -69,6 +69,12 @@ export const productRouter = createTRPCRouter({
     return product;
   }),
 
+  // conta produtos
+  count: publicProcedure.query(async ({ ctx }) => {
+    const count = await ctx.db.product.count();
+    return count;
+  }),
+
   // cria produto
   createProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
