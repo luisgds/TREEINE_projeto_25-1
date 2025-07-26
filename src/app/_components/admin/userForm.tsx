@@ -34,6 +34,7 @@ export function UserForm({
     const request = api.user.update.useMutation({
         onSuccess: (data) => {
             utils.user.getAll.invalidate();
+            utils.user.countUsers.invalidate();
     },  
         onError: (error) => {
     }})
@@ -41,6 +42,7 @@ export function UserForm({
     const del = api.user.delete.useMutation({
         onSuccess: (data) => {
             utils.user.getAll.invalidate();
+            utils.user.countUsers.invalidate();
         },
         onError: (error) => {
 
@@ -61,8 +63,8 @@ export function UserForm({
     }
 
     return (
-        <div onClick={onClose} className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
-        <div onClick={e => e.stopPropagation()} className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
+        <div onMouseDown={onClose} className="fixed inset-0 bg-black/30 flex items-center justify-center z-50">
+        <div onMouseDown={e => e.stopPropagation()} className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
         <div className="border-4 border-gray-200 rounded-md p-4">
             <div className="flex justify-between">
                 <h3 className="font-bold text-lg" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}usuário</h3>
@@ -74,7 +76,10 @@ export function UserForm({
                 <label htmlFor="email">Email</label>
                 <input name="email" id="email" value={email} onChange={(e) => {setEmail(e.target.value)}} type="email" placeholder="exemple@gmail.com"></input>
                 <label htmlFor="role">Role</label>
-                <input name="role" id="role" value={role} onChange={(e) => {setRole(e.target.value)}} type="url" placeholder="admin"></input>
+                <select name="role" id="role" value={role} onChange={(e) => {setRole(e.target.value)}} className="w-full mb-2 border-2 rounded-sm border-gray-300 p-0.5">
+                    <option value="user">User</option>
+                    <option value="admin">Admin</option>
+                </select>
                 <div className="text-center">
                     <button className="bg-green-500 text-white rounded-md w-full p-1">Salvar usuário</button>
                 </div>
