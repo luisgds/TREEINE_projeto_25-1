@@ -1,23 +1,31 @@
-"use client"
+"use client";
 import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
-import { redirect } from "next/navigation";
+import { useRouter } from "next/navigation";
 
+export function Card({ nome, preco, id }: { id: number; nome: string; preco: number }) {
+  const { data: session } = useSession();
+  const router = useRouter();
+  const utils = api.useUtils();
 
-export function Card({nome, preco, id}:{id:number ,nome:string, preco:number}){
-    const {data:session} = useSession()
-    const mutation = api.cart.create.useMutation()
+    // Integrando ao Carrinho 
+  const mutation = api.cart.addItem.useMutation({
+    onSuccess: () => {
+      utils.cart.getCartItems.invalidate(); // avisa ao front da mudança no estado do bd
+      alert(`${nome} foi adicionado ao carrinho!`);
+    },
+    onError: (error) => {
+      alert(`Erro ao adicionar o produto: ${error.message}`);
+    },
+  });
 
-    const handleCompra = () =>{
-
-        console.log("valor do id:",id )
-        if(!session || !session.user){
-            redirect("/login");
-        }
-
-        mutation.mutate({user_id:session.user.id, quantity:1, product_id:id})
-        
+  const handleCompra = () => {
+    if (!session || !session.user) {
+      router.push("/login");
+      return;
     }
+    mutation.mutate({ productId: id });
+  };
 
     return (
         <div className="m-4 border-2 border-solid border-black rounded-xl w-72 table flex-col p-4 max-h-80 max-[1024]:m-4">
