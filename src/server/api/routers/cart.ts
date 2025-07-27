@@ -68,4 +68,13 @@ export const cartRouter = createTRPCRouter({
         where: { id: input.itemId, user_id: ctx.session.user.id },
       });
     }),
+
+   // Limpar todo o carrinho (agora só utilizado na finalização da compra)
+  clearCart: protectedProcedure.mutation(async ({ ctx }) => {
+    await ctx.db.shopCart.deleteMany({
+      where: { user_id: ctx.session.user.id },
+    });
+    return { success: true };
+  }),
 });
+
