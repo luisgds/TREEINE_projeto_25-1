@@ -64,7 +64,7 @@ export const userRouter = createTRPCRouter({
    * Rota: DELETE /api/trpc/user.delete
    * Descrição: Deleta um usuário pelo ID
    * Entrada: string (ID do usuário)
-   * Acesso: Público
+   * Acesso: Admin
    */
     delete: adminProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.delete({where:{id: input}});
@@ -74,10 +74,26 @@ export const userRouter = createTRPCRouter({
    * Rota: PUT /api/trpc/user.update
    * Descrição: Atualiza um usuário existente
    * Entrada: userSchema (deve conter `id` para localizar o registro)
-   * Acesso: Público
+   * Acesso: Admin
    */
     update: adminProcedure.input(userUpdateSchema).mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.update({where:{id: input.id}, data: input});
             return user;
+    }),
+    /**
+   * Rota: PUT /api/trpc/user.hasAdminPermission
+   * Descrição: Retorna um valor booleano que sinaliza a permissão para acessar página de admin
+   * Entrada: string (ID do usuário)
+   * Acesso: Público
+   */
+    hasAdminPermission: publicProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
+            let user = await ctx.db.user.findUnique({where:{id:input}});
+
+            if(user?.role != "user"){
+                return true;
+            } else {
+                return false;
+            }
+
     }),
 });

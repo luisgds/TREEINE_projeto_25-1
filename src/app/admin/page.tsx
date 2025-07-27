@@ -3,10 +3,25 @@ import { NavBar } from "~/app/_components/navbar"
 import { ProductManagementPanel } from "../_components/admin/productManagementPanel"
 import { UserManagementPanel } from "../_components/admin/userManagementPanel";
 import { InfoCardCollection } from "../_components/admin/infoCardCollection";
+import { api } from "~/trpc/server";
+import { redirect } from "next/navigation";
+import { auth } from "~/server/auth";
 
 
+export default async function AdminPage() {
 
-export default function AdminPage() {
+    const session = await auth()
+
+    if(!session || !session.user){
+        return redirect("/login");
+    }
+
+    const permission = await api.user.hasAdminPermission(session?.user.id)
+    if(permission == false ){
+        return redirect("/");
+    }
+
+
     return (
         <>
             <NavBar></NavBar>
