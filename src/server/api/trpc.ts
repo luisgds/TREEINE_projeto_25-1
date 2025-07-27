@@ -131,3 +131,24 @@ export const protectedProcedure = t.procedure
       },
     });
   });
+
+export const adminProcedure = t.procedure
+  .use(timingMiddleware)
+  .use(async ({ ctx, next }) => {
+
+    if (!ctx.session?.user) {
+      throw new TRPCError({ code: "UNAUTHORIZED" });
+    }
+
+    const current_user = await ctx.db.user.findUnique({where:{id:ctx.session.user.id}});
+    if(current_user?.role != "admin"){
+      throw new TRPCError({code: "UNAUTHORIZED"});
+    }
+
+    return next({
+      ctx: {
+        // infers the `session` as non-nullable
+        session: { ...ctx.session, user: ctx.session.user },
+      },
+    });
+  });

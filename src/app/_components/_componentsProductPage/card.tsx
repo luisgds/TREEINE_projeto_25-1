@@ -3,7 +3,8 @@ import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export function Card({ nome, preco, id }: { id: number; nome: string; preco: number }) {
+export function Card({nome, preco, image_url, id}:{nome:string, preco:number, image_url:string, id:number}){
+
   const { data: session } = useSession();
   const router = useRouter();
   const utils = api.useUtils();
@@ -31,7 +32,7 @@ export function Card({ nome, preco, id }: { id: number; nome: string; preco: num
         <div className="m-4 border-2 border-solid border-black rounded-xl w-72 table flex-col p-4 max-h-80 max-[1024]:m-4">
             <p></p>
             <div className="w-9/10 m-auto object-contain h-40">
-                <img className="w-10/10 rounded h-10/10" src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcReg5C0xgdL5UyagnEPC26Pz4B4Uyi9xjCr7Q&s" alt="" />
+                <img className="w-10/10 rounded h-10/10" src={image_url} alt="" />
             </div>
 
             <div className="h-5/10 pt-4">

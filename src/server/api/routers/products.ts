@@ -1,6 +1,9 @@
+import { unlinkSync } from "fs";
+import cloudinary from "../../cloudinary"
 import { z } from "zod";// Biblioteca para validação e tipagem dos dados de entrada
 
 import {
+  adminProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
@@ -58,6 +61,7 @@ const productSchema = z.object({
   nome: z.string(), // nome é obrigatório
   preco: z.coerce.number().min(0), // preco convertido para número (mesmo que venha como string) e deve ser ≥ 0
   descricao: z.string() // descrição obrigatória
+  imageUrl: z.string().optional()
 })
 //    * Acessos: públicos
 export const productRouter = createTRPCRouter({
@@ -77,25 +81,40 @@ export const productRouter = createTRPCRouter({
     return product;
   }),
 
-  // cria produto
-  createProduct: publicProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
+  // conta produtos
+  count: publicProcedure.query(async ({ ctx }) => {
+    const count = await ctx.db.product.count();
+    return count;
+  }),
 
-    const product = await ctx.db.product.create({data:{descricao: input.descricao, nome: input.nome, preco: input.preco}})
+  // cria produto
+  createProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
+
+    const product = await ctx.db.product.create({data:input})
     
     return product;
 
   }),
 
+  uploadImage: publicProcedure
+    .input(z.object({ file: z.string() }))
+    .mutation(async ({ input }) => {
+      const upload = await cloudinary.uploader.upload(input.file);
+      return { url: upload.secure_url };
+    }),
+
+
   // deleta produto por id
-  deleteProduct: publicProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
+  deleteProduct: adminProcedure.input(z.number()).mutation(async ({ input, ctx }) => {
     const product = await ctx.db.product.delete({where:{id: input}});
+
     return product;
   }),
 
   // atualiza produto por id
-  updateProduct: publicProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
+  updateProduct: adminProcedure.input(productSchema).mutation(async ({ input, ctx }) => {
 
-    const product = await ctx.db.product.update({where:{id: input.id}, data:{nome: input.nome, preco: input.preco, descricao: input.descricao}});
+    const product = await ctx.db.product.update({where:{id: input.id}, data:input});
     return product;
   }),
 

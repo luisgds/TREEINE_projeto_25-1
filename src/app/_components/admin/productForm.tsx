@@ -1,5 +1,6 @@
 "use client"
 
+import { error } from "console";
 import { useState } from "react";
 import { IoClose } from "react-icons/io5";
 import { api } from "~/trpc/react";
@@ -7,23 +8,24 @@ import { api } from "~/trpc/react";
 type ProductFormProps = {
     onClose: () => void,
     isCreate: boolean,
-    id?: number | undefined,
-    initialNome?: string,
-    initialPreco?: number,
-    initialDescricao?: string
+    data?: {
+        nome: string | null,
+        id: number | undefined,
+        preco: number | null,
+        descricao: string | null,
+        imageUrl: string | null
+    }
 }
 
 export function ProductForm({
     onClose, 
     isCreate,
-    id=undefined,
-    initialNome="",
-    initialPreco=0,
-    initialDescricao=""
+    data={nome:null, id:undefined, preco:0, descricao:"", imageUrl:""}
 } : ProductFormProps) {
-    const [nome, setNome] = useState(initialNome);
-    const [preco, setPreco] = useState(initialPreco);
-    const [descricao, setDescricao] = useState(initialDescricao);
+    const [nome, setNome] = useState(data["nome"] ?? "");
+    const [preco, setPreco] = useState(data["preco"] ?? 0);
+    const [descricao, setDescricao] = useState(data["descricao"] ?? "");
+    const [imageFile, setImageFile] = useState<File | null>(null);
 
     const utils = api.useUtils();
 
@@ -50,17 +52,43 @@ export function ProductForm({
         }
     })
 
-    const handleSubmit = (e: React.FormEvent) => {
-        request.mutate({nome, preco, descricao, id});
+    const uploadImage = api.products.uploadImage.useMutation({
+        onSuccess: (data) => {
 
+        },
+        onError: (error) => {
+            console.error(error.message);
+        }
+    })
+
+    const fileToBase64 = (file: File) =>
+    new Promise<string>((resolve, reject) => {
+        const reader = new FileReader();
+        reader.readAsDataURL(file);
+        reader.onload = () => resolve(reader.result as string);
+        reader.onerror = reject;
+    });
+
+
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+
+        let imageUrl = data["imageUrl"] ?? undefined;
+        if (imageFile) {
+            const base64 = await fileToBase64(imageFile);
+            const uploadResult = await uploadImage.mutateAsync({ file: base64 });
+            imageUrl = uploadResult.url;
+        }
+        console.log(imageUrl);
+
+        request.mutate({nome, preco, descricao, id:data["id"], imageUrl});
     }
 
     const handleDelete = (e: React.MouseEvent) => {
-        if (id == undefined) {
+        if (data["id"] == undefined) {
             return
         }
-        del.mutate(id);
+        del.mutate(data["id"]);
     }
 
     return (
@@ -68,16 +96,18 @@ export function ProductForm({
         <div onMouseDown={e => e.stopPropagation()} className="bg-white rounded-lg shadow-lg w-[90%] max-w-lg p-6">
         <div className="border-4 border-gray-200 rounded-md p-4">
             <div className="flex justify-between">
-                <h3 className="font-bold text-lg" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}produto</h3>
+                <h3 className="font-bold text-lg mb-1" >{isCreate && "Adicionar novo "}{!isCreate && "Editar "}produto</h3>
                 <button onClick={onClose}><IoClose className="text-2xl"/></button>
             </div>
-            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2">
+            <form onSubmit={handleSubmit} className="label *:block [&_input]:w-full [&_input]:mb-2 [&_input]:border-2 [&_input]:rounded-sm [&_input]:border-gray-300 [&_input]:p-0.5">
                 <label htmlFor="nome">Nome do Produto</label>
-                <input name="nome" id="nome" value={nome} onChange={(e) => {setNome(e.target.value)}} placeholder="Ex: Piano Yamaha" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="nome" id="nome" value={nome} onChange={(e) => {setNome(e.target.value)}} placeholder="Ex: Piano Yamaha"></input>
                 <label htmlFor="preco">Preço</label>
-                <input name="preco" id="preco" value={preco} onChange={(e) => {setPreco(Number(e.target.value))}} type="number" placeholder="Ex: R$ 2.500" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="preco" id="preco" value={preco} onChange={(e) => {setPreco(Number(e.target.value))}} type="number" placeholder="Ex: R$ 2.500"></input>
                 <label htmlFor="descricao">Descrição</label>
-                <input name="descricao" id="descricao" value={descricao} onChange={(e) => {setDescricao(e.target.value)}} placeholder="Ex: Piano tradicional preto" className="border-2 rounded-sm border-gray-300"></input>
+                <input name="descricao" id="descricao" value={descricao} onChange={(e) => {setDescricao(e.target.value)}} placeholder="Ex: Piano tradicional preto"></input>
+                <label htmlFor="imagem">Imagem</label>
+                <input name="imagem" id="imagem" type="file" onChange={(e) => setImageFile(e.target.files?.[0] ?? null)} className="cursor-pointer file:bg-gray-200 !p-0 file:p-1 file:cursor-pointer"></input>
                 <div className="text-center">
                     <button className="bg-purple-600 text-white rounded-md w-full p-1">Salvar Produto</button>
                 </div>

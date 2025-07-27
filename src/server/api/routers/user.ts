@@ -23,14 +23,17 @@ import {
 
 // Schema de validação para o User, baseado no model do Prisma
 // Schema feito com base na model acima. TODO: falta adicionar os fields relacionais
-const userSchema = z.object({
-  id: z.string().optional(),            // opcional para criação, necessário para update
+const userUpdateSchema = z.object({
+  id: z.string(),                       // obrigatorio para criação, necessário para update
   name: z.string().optional(),          // nome é opcional
   email: z.string().optional(),         // email é opcional (mas deve ser único no banco)
-  emailVerified: z.date().optional(),  // data de verificação de email, também opcional
   image: z.string().optional(),        // URL da imagem de perfil, se houver
+  role: z.string().optional()
+  
 });
 
+// Usuários são criados pelo next auth
+// por isso aqui não temos user.create
 export const userRouter = createTRPCRouter({
 /**
    * Rota: GET /api/trpc/user.getAll
@@ -55,17 +58,10 @@ export const userRouter = createTRPCRouter({
             const user = await ctx.db.user.findUnique({where:{id: id}});
             return user;
         }),
-      /**
-   * Rota: POST /api/trpc/user.create
-   * Descrição: Cria um novo usuário
-   * Entrada: userSchema (dados validados com zod)
-   * Acesso: Público
-   */
-    create: publicProcedure
-        .input(userSchema)
-        .mutation(async ({ input, ctx }) => {
-            const user = await ctx.db.user.create({data: input})
-            return user;
+    countUsers: publicProcedure
+        .query(async ({ ctx }) => {
+            const count = await ctx.db.user.count({where: {role:"user"}});
+            return count;
         }),
     /**
    * Rota: DELETE /api/trpc/user.delete
@@ -86,7 +82,7 @@ export const userRouter = createTRPCRouter({
    * Acesso: Público
    */
     update: publicProcedure
-        .input(userSchema)
+        .input(userUpdateSchema)
         .mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.update({where:{id: input.id}, data: input});
             return user;

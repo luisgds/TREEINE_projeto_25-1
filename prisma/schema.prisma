@@ -65,12 +65,14 @@ model VerificationToken {
 }
 //fim das models do auth
 
+
 /// Representa um produto disponível para compra.
 model Product {
   id        Int         @id @default(autoincrement()) /// Identificador único do produto
   nome      String                             /// Nome do produto
   preco     Float                              /// Preço do produto
   descricao String?                           /// Descrição (opcional)
+  imageUrl String?
   carts     ShopCart[]                        /// Relação com os carrinhos que contêm esse produto
 }
 

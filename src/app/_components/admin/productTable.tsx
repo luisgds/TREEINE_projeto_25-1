@@ -24,12 +24,13 @@ export function ProductTable({nome}: {nome: string}) {
                     <th scope="col" className="w-3/10 pb-2">Nome</th>
                     <th scope="col">Preço</th>
                     <th scope="col">Descrição</th>
+                    <th scope="col">Imagem</th>
                     <th scope="col" className="text-center">Ações</th>
                 </tr>
             </thead>
             <tbody>
                 {products.map((product) => {
-                    return <ProductTableItem key={product.id} id={product.id} nome={product.nome} preco={product.preco} descricao={product.descricao ?? undefined}></ProductTableItem>
+                    return <ProductTableItem key={product.id} data={product}></ProductTableItem>
                 })}
             </tbody>
         </table>
