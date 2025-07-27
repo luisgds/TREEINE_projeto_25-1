@@ -1,29 +1,91 @@
-# Create T3 App
+# 🚀 Projeto Struct Treinee 2025/1
 
-This is a [T3 Stack](https://create.t3.gg/) project bootstrapped with `create-t3-app`.
+Um site moderno e escalável construído com [Next.js](https://nextjs.org/), [Prisma](https://www.prisma.io/), [NextAuth.js](https://next-auth.js.org/) e [pnpm](https://pnpm.io/).
 
-## What's next? How do I make an app with this?
+---
 
-We try to keep this project as simple as possible, so you can start with just the scaffolding we set up for you, and add additional things later when they become necessary.
+## ✨ Tecnologias Utilizadas
 
-If you are not familiar with the different technologies used in this project, please refer to the respective docs. If you still are in the wind, please join our [Discord](https://t3.gg/discord) and ask for help.
+- ⚛️ Next.js
+- 🔐 NextAuth.js
+- 🧬 Prisma ORM
+- 🐬 MySQL
+- 📦 pnpm
+- 🖼️ Tailwind CSS 
 
-- [Next.js](https://nextjs.org)
-- [NextAuth.js](https://next-auth.js.org)
-- [Prisma](https://prisma.io)
-- [Drizzle](https://orm.drizzle.team)
-- [Tailwind CSS](https://tailwindcss.com)
-- [tRPC](https://trpc.io)
+---
 
-## Learn More
+## ⚙️ Instalação e Configuração
 
-To learn more about the [T3 Stack](https://create.t3.gg/), take a look at the following resources:
+### 1. Clone o repositório
 
-- [Documentation](https://create.t3.gg/)
-- [Learn the T3 Stack](https://create.t3.gg/en/faq#what-learning-resources-are-currently-available) — Check out these awesome tutorials
+```bash
+git clone https://github.com/luisgds/TREEINE_projeto_25-1.git
+cd TREEINE_projeto_25-1
+```
 
-You can check out the [create-t3-app GitHub repository](https://github.com/t3-oss/create-t3-app) — your feedback and contributions are welcome!
+---
 
-## How do I deploy this?
+### 2. Configure as variáveis de ambiente
 
-Follow our deployment guides for [Vercel](https://create.t3.gg/en/deployment/vercel), [Netlify](https://create.t3.gg/en/deployment/netlify) and [Docker](https://create.t3.gg/en/deployment/docker) for more information.
+---
+
+🔐 Obtenha as chaves acessando os links a seguir:
+
+🔸 Cloudinary: https://cloudinary.com/console
+
+🔹 Google Console: https://console.cloud.google.com/apis/credentials
+
+---
+
+Adicione estas variáveis em seu arquivo .env:
+
+```bash
+# Next Auth Discord Provider
+AUTH_SECRET="example123"
+NEXTAUTH_URL="http://localhost:3000"
+NEXTAUTH_URL_INTERNAL="http://localhost:3000"
+# Next Auth Discord Provider
+AUTH_DISCORD_ID="example123"
+AUTH_DISCORD_SECRET="example123"
+# Next Auth Google Provider
+GOOGLE_CLIENT_ID="example123"
+GOOGLE_CLIENT_SECRET="example123"
+# Cloudinary
+CLOUDINARY_CLOUD_NAME="example123"
+CLOUDINARY_API_KEY="example123"
+CLOUDINARY_API_SECRET="example123"
+CLOUDINARY_URL=cloudinary://<example123>:<example123>@example123
+``` 
+
+---
+
+### 3. Instale as dependências com pnpm
+
+---
+
+```bash
+pnpm i
+pnpm db:push
+```
+
+Caso não tenha [pnpm](https://pnpm.io/), instale em seu terminal com:
+
+```bash
+npm install pnpm --global
+```
+
+---
+
+### 4. Rodando o projeto localmente
+
+---
+
+```bash
+pnpm dev
+```
+
+e acesse http://localhost:3000 no seu navegador
+
+---
+
