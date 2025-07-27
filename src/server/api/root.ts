@@ -11,7 +11,7 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 export const appRouter = createTRPCRouter({
   products: productRouter ,// Agrupa todas as rotas relacionadas a produtos (ex: getAllProducts, createProduct, etc.)
   user: userRouter, // Agrupa todas as rotas relacionadas a usuários (ex: get, update, delete, etc.)
-  cart : cartRouter
+  cart : cartRouter // Agrupa todas as rotas relacionadas a carrinho (ex: get, update, delete, etc.)
 });
 
 // export type definition of API

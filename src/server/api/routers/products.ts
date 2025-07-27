@@ -42,6 +42,16 @@ export const postRouter = createTRPCRouter({
 });
 */
 
+/*
+* model Product{
+*     id Int @id @default(autoincrement())
+*     nome String
+*     preco Float
+*     descricao String?
+*     carts ShopCart[]
+* }
+*/
+
 // Schema de validação para produto
 const productSchema = z.object({
   id: z.number().optional(), // id é opcional pois será usado apenas em atualizações
