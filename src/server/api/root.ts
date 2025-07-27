@@ -9,8 +9,8 @@ import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
  * All routers added in /api/routers should be manually added here.
  */
 export const appRouter = createTRPCRouter({
-  products: productRouter,
-  user: userRouter,
+  products: productRouter ,// Agrupa todas as rotas relacionadas a produtos (ex: getAllProducts, createProduct, etc.)
+  user: userRouter // Agrupa todas as rotas relacionadas a usuários (ex: get, update, delete, etc.)
   cart : cartRouter
 });
 
