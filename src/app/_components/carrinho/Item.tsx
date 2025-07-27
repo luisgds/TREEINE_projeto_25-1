@@ -18,8 +18,7 @@ export function Item({ item, onUpdateQuantity, onRemove }: ItemProps) {
   return (
     <div className="flex items-center rounded-lg border border-gray-200 bg-white p-4 shadow-sm">
       <div className="relative mr-4 h-20 w-20 flex-shrink-0">
-        {/* integrar as imagens depois */}
-        {/* <Image src={item.product.image} alt={item.product.nome} ... /> */}
+        <img src={item.product.imageUrl ?? undefined} alt={item.product.nome} />
       </div>
       <div className="flex-grow">
         <h2 className="font-semibold text-gray-800">{item.product.nome}</h2>
