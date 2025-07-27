@@ -1,6 +1,7 @@
 import { z } from "zod"; // Importa o Zod para validação de dados
 
 import {
+    adminProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
@@ -40,8 +41,7 @@ export const userRouter = createTRPCRouter({
    * Descrição: Retorna todos os usuários cadastrados no banco
    * Acesso: Público
 */
-    getAll: publicProcedure
-        .query(async ({ ctx }) => {
+    getAll: publicProcedure.query(async ({ ctx }) => {
             const users = await ctx.db.user.findMany();
             return users;
         }),
@@ -51,15 +51,12 @@ export const userRouter = createTRPCRouter({
    * Entrada: string (ID do usuário)
    * Acesso: Público
    */
-    get: publicProcedure
-        .input(z.string())
-        .query(async ({ input, ctx }) => {
+    get: publicProcedure.input(z.string()).query(async ({ input, ctx }) => {
             const id = input;
             const user = await ctx.db.user.findUnique({where:{id: id}});
             return user;
         }),
-    countUsers: publicProcedure
-        .query(async ({ ctx }) => {
+    countUsers: publicProcedure.query(async ({ ctx }) => {
             const count = await ctx.db.user.count({where: {role:"user"}});
             return count;
         }),
@@ -69,9 +66,7 @@ export const userRouter = createTRPCRouter({
    * Entrada: string (ID do usuário)
    * Acesso: Público
    */
-    delete: publicProcedure
-        .input(z.string())
-        .mutation(async ({ input, ctx }) => {
+    delete: adminProcedure.input(z.string()).mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.delete({where:{id: input}});
             return user;
         }),
@@ -81,9 +76,7 @@ export const userRouter = createTRPCRouter({
    * Entrada: userSchema (deve conter `id` para localizar o registro)
    * Acesso: Público
    */
-    update: publicProcedure
-        .input(userUpdateSchema)
-        .mutation(async ({ input, ctx }) => {
+    update: adminProcedure.input(userUpdateSchema).mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.update({where:{id: input.id}, data: input});
             return user;
     }),

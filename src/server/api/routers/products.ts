@@ -1,4 +1,3 @@
-import { unlinkSync } from "fs";
 import cloudinary from "../../cloudinary"
 import { z } from "zod";// Biblioteca para validação e tipagem dos dados de entrada
 
@@ -96,9 +95,7 @@ export const productRouter = createTRPCRouter({
 
   }),
 
-  uploadImage: publicProcedure
-    .input(z.object({ file: z.string() }))
-    .mutation(async ({ input }) => {
+  uploadImage: adminProcedure.input(z.object({ file: z.string() })).mutation(async ({ input }) => {
       const upload = await cloudinary.uploader.upload(input.file);
       return { url: upload.secure_url };
     }),
