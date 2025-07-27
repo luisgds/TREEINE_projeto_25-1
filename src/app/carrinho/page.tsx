@@ -11,7 +11,7 @@ export default function CarrinhoPage() {
 
   if(!session || !session.user){
     return redirect("/login");
-  }
+  } 
 
   return (
     <div className="flex min-h-screen flex-col bg-gray-50">
