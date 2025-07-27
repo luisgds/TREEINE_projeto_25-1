@@ -1,13 +1,14 @@
-import { z } from "zod";
 import { unlinkSync } from "fs";
 import cloudinary from "../../cloudinary"
+import { z } from "zod";// Biblioteca para validação e tipagem dos dados de entrada
 
 import {
   adminProcedure,
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "~/server/api/trpc";
+} from "~/server/api/trpc"; // Helpers para criar rotas com tRPC e definir níveis de acesso
+
 /*
 export const postRouter = createTRPCRouter({
   hello: publicProcedure
@@ -44,18 +45,29 @@ export const postRouter = createTRPCRouter({
 });
 */
 
+/*
+* model Product{
+*     id Int @id @default(autoincrement())
+*     nome String
+*     preco Float
+*     descricao String?
+*     carts ShopCart[]
+* }
+*/
 
+// Schema de validação para produto
 const productSchema = z.object({
-  id: z.number().optional(),
-  nome: z.string(),
-  preco: z.coerce.number().min(0),
-  descricao: z.string(),
+  id: z.number().optional(), // id é opcional pois será usado apenas em atualizações
+  nome: z.string(), // nome é obrigatório
+  preco: z.coerce.number().min(0), // preco convertido para número (mesmo que venha como string) e deve ser ≥ 0
+  descricao: z.string() // descrição obrigatória
   imageUrl: z.string().optional()
 })
-
+//    * Acessos: públicos
 export const productRouter = createTRPCRouter({
-
-  // retorna todos os produtos
+  /**
+   * Rota para buscar todos os produtos
+   */
   getAllProducts: publicProcedure.query(async ({ ctx }) => {
 
     const products = await ctx.db.product.findMany();

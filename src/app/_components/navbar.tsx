@@ -46,6 +46,9 @@ export function NavBar() {
           <li>
             <Link href="/productPage" className="hover:text-[#8f068f]">Produtos</Link>
           </li>
+          <li>
+            <Link href="/carrinho" className="hover:text-[#8f068f]">Carrinho</Link>
+          </li>
         </ul>
 
         <div className="mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">

@@ -42,16 +42,18 @@ model Session {
     user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
 }
 
+/// Representa um usuário no sistema.
+/// Pode ser usado tanto para autenticação quanto para associação com outros dados (ex: carrinho).
 model User {
-    id            String    @id @default(cuid())
-    name          String?
-    email         String?   @unique
-    emailVerified DateTime?
-    image         String?
-    accounts      Account[]
-    sessions      Session[]
-    carts         ShopCart[]
-    role          String @default("user")
+  id            String      @id @default(cuid()) /// Identificador único do usuário (gerado com CUID)
+  name          String?                     /// Nome do usuário (opcional)
+  email         String?     @unique         /// Email do usuário (opcional, mas único)
+  emailVerified DateTime?                  /// Data de verificação do email (opcional)
+  image         String?                    /// URL da imagem de perfil (opcional)
+  accounts      Account[]                  /// Contas externas conectadas (ex: Google, GitHub)
+  sessions      Session[]                  /// Sessões ativas do usuário
+  carts         ShopCart[]                 /// Itens no carrinho de compras relacionados ao usuário
+  role          String      @default("user") /// Função do usuário (ex: "user", "admin")
 }
 
 model VerificationToken {
@@ -63,19 +65,30 @@ model VerificationToken {
 }
 //fim das models do auth
 
-model Product{
-    id Int @id @default(autoincrement())
-    nome String
-    preco Float
-    descricao String?
-    imageUrl String?
-    carts ShopCart[]
+
+/// Representa um produto disponível para compra.
+model Product {
+  id        Int         @id @default(autoincrement()) /// Identificador único do produto
+  nome      String                             /// Nome do produto
+  preco     Float                              /// Preço do produto
+  descricao String?                           /// Descrição (opcional)
+  imageUrl String?
+  carts     ShopCart[]                        /// Relação com os carrinhos que contêm esse produto
 }
 
-model ShopCart{
-    id Int @id @default(autoincrement())
-    user_id String
-    product_id Int
-    user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
-    product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+/// Representa um item em um carrinho de compras.
+/// Cada registro conecta um usuário a um produto específico com uma quantidade.
+model ShopCart {
+  id         Int      @id @default(autoincrement()) /// Identificador único do item no carrinho
+  user_id    String                                /// ID do usuário (chave estrangeira para `User`)
+  product_id Int                                   /// ID do produto (chave estrangeira para `Product`)
+  quantity   Int                                   /// Quantidade do produto no carrinho
+
+  /// Relação com o modelo User.
+  /// Ao deletar o usuário, os itens do carrinho dele também são removidos (Cascade).
+  user       User     @relation(fields: [user_id], references: [id], onDelete: Cascade)
+
+  /// Relação com o modelo Product.
+  /// Ao deletar o produto, os itens do carrinho associados também são removidos (Cascade).
+  product    Product  @relation(fields: [product_id], references: [id], onDelete: Cascade)
 }

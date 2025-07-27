@@ -32,12 +32,17 @@ declare module "next-auth" {
  *
  * @see https://next-auth.js.org/configuration/options
  */
+// Exporta a configuração de autenticação usada pelo NextAuth
 export const authConfig = {
+  /**
+   * Lista de provedores de autenticação.
+   * Aqui o usuário pode fazer login com Discord ou Google.
+   */
   providers: [
     DiscordProvider,
     GoogleProvider({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET
+      clientId: process.env.GOOGLE_CLIENT_ID, // ID do app no Google Cloud Console
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET // Chave secreta do app no Google
     })
     /**
      * ...add more providers here.
@@ -49,7 +54,20 @@ export const authConfig = {
      * @see https://next-auth.js.org/providers/github
      */
   ],
+  /**
+   * Define o adapter do Prisma para que o NextAuth salve sessões, usuários, contas, etc. no banco.
+   * Isso é necessário para persistência de dados.
+   */
+
   adapter: PrismaAdapter(db),
+
+  /**
+   * Callbacks personalizados para modificar os dados de sessão ou token.
+   * 
+   * Esse callback `session` é executado quando a sessão é criada.
+   * Ele adiciona o `id` do usuário no objeto de `session.user`,
+   * o que é útil para consultar o usuário autenticado no frontend.
+   */
   callbacks: {
     session: ({ session, user }) => ({
       ...session,
@@ -59,4 +77,5 @@ export const authConfig = {
       },
     }),
   },
+  // Faz com que o objeto esteja conforme o tipo NextAuthConfig (validação TypeScript)
 } satisfies NextAuthConfig;

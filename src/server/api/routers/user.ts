@@ -1,27 +1,56 @@
-import { z } from "zod";
+import { z } from "zod"; // Importa o Zod para validação de dados
 
 import {
   createTRPCRouter,
   protectedProcedure,
   publicProcedure,
-} from "~/server/api/trpc";
+} from "~/server/api/trpc"; // Importa helpers do tRPC para criar rotas e definir se são públicas ou protegidas
 
+/**
+ * Representação do modelo User no Prisma:
+ * 
+ * model User {
+ *   id            String    @id @default(cuid())
+ *   name          String?
+ *   email         String?   @unique
+ *   emailVerified DateTime?
+ *   image         String?
+ *   accounts      Account[]   // <- Relacionamentos
+ *   sessions      Session[]   // <- Relacionamentos
+ *   carts         ShopCart[]  // <- Relacionamentos
+ * }
+ */
+
+// Schema de validação para o User, baseado no model do Prisma
+// Schema feito com base na model acima. TODO: falta adicionar os fields relacionais
 const userUpdateSchema = z.object({
-  id: z.string(),
-  name: z.string().optional(),
-  email: z.string().optional(),
-  image: z.string().optional(),
+  id: z.string(),                       // obrigatorio para criação, necessário para update
+  name: z.string().optional(),          // nome é opcional
+  email: z.string().optional(),         // email é opcional (mas deve ser único no banco)
+  image: z.string().optional(),        // URL da imagem de perfil, se houver
   role: z.string().optional()
-})
+  
+});
 
 // Usuários são criados pelo next auth
 // por isso aqui não temos user.create
 export const userRouter = createTRPCRouter({
+/**
+   * Rota: GET /api/trpc/user.getAll
+   * Descrição: Retorna todos os usuários cadastrados no banco
+   * Acesso: Público
+*/
     getAll: publicProcedure
         .query(async ({ ctx }) => {
             const users = await ctx.db.user.findMany();
             return users;
         }),
+    /**
+   * Rota: GET /api/trpc/user.get
+   * Descrição: Retorna um usuário específico pelo ID
+   * Entrada: string (ID do usuário)
+   * Acesso: Público
+   */
     get: publicProcedure
         .input(z.string())
         .query(async ({ input, ctx }) => {
@@ -34,12 +63,24 @@ export const userRouter = createTRPCRouter({
             const count = await ctx.db.user.count({where: {role:"user"}});
             return count;
         }),
+    /**
+   * Rota: DELETE /api/trpc/user.delete
+   * Descrição: Deleta um usuário pelo ID
+   * Entrada: string (ID do usuário)
+   * Acesso: Público
+   */
     delete: publicProcedure
         .input(z.string())
         .mutation(async ({ input, ctx }) => {
             const user = await ctx.db.user.delete({where:{id: input}});
             return user;
         }),
+    /**
+   * Rota: PUT /api/trpc/user.update
+   * Descrição: Atualiza um usuário existente
+   * Entrada: userSchema (deve conter `id` para localizar o registro)
+   * Acesso: Público
+   */
     update: publicProcedure
         .input(userUpdateSchema)
         .mutation(async ({ input, ctx }) => {
