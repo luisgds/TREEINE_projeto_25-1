@@ -1,5 +1,5 @@
 import { productRouter } from "~/server/api/routers/products";
-import { userRouter } from "./routers/user";
+import { userRouter } from "~/server/api/routers/user";
 import { createCallerFactory, createTRPCRouter } from "~/server/api/trpc";
 
 /**
