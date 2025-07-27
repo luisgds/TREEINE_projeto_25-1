@@ -1,6 +1,18 @@
 import { z } from "zod";
 import { createTRPCRouter, protectedProcedure,} from "~/server/api/trpc";
 
+// schema.prima do carrinho
+/*
+* model ShopCart{
+*     id Int @id @default(autoincrement())
+*     user_id String
+*     product_id Int
+*     quantity Int
+*     user User @relation(fields: [user_id], references: [id], onDelete: Cascade)
+*     product Product @relation(fields: [product_id], references: [id], onDelete: Cascade)
+* }
+*/
+
 export const cartRouter = createTRPCRouter({
   
   getCartItems: protectedProcedure.query(async ({ ctx }) => {
