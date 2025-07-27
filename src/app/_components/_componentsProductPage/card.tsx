@@ -3,7 +3,7 @@ import { api } from "~/trpc/react";
 import { useSession } from "next-auth/react";
 import { useRouter } from "next/navigation";
 
-export function Card({nome, preco, image_url, id}:{nome:string, preco:number, image_url:string, id:number}){
+export function Card({nome, preco, image_url, id}:{nome:string, preco:number, image_url:string | undefined, id:number}){
 
   const { data: session } = useSession();
   const router = useRouter();
