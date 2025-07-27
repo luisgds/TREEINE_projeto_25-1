@@ -13,7 +13,7 @@ export function InfoCardCollection({
     const {data:productCount} = api.products.count.useQuery();
 
     return (
-        <div className="flex justify-between m-8">
+        <div className="flex justify-between m-8 flex-wrap content-center">
             <InfoCard text="Total Produtos" data={String(productCount ?? 0)} icon={<BsBoxSeam style={{color: "blue", fontSize: "1.5em"}} />}></InfoCard>
             <InfoCard text="Clientes" data={String(userCount ?? 0)} icon={<GoPeople style={{color: "green", fontSize: "1.5em"}}/>}></InfoCard>
             <InfoCard text="Vendas Hoje" data="R$ 4,890" icon={<FaChartBar style={{color: "purple", fontSize: "1.5em"}}/>}></InfoCard>
