@@ -2,14 +2,16 @@
 
 import styles from "~/styles/navbar.module.css"
 import { useState } from "react";
-import { AiOutlineLogin } from "react-icons/ai";
+import { VscAccount } from "react-icons/vsc";
 import { IoMusicalNotes } from "react-icons/io5";
 import { FaBars, FaTimes } from "react-icons/fa";
 import Link from "next/link";
-import { signIn } from "next-auth/react";
+import { signIn, signOut, useSession } from "next-auth/react";
+import { sign } from "node:crypto";
 
 export function NavBar() {
   const [menuOpen, setMenuOpen] = useState(false);
+  const {data:session} = useSession()
 
   return (
     <nav className="flex flex-col border-b border-gray-400 md:flex-row md:items-center md:justify-between md:h-12">
@@ -52,8 +54,12 @@ export function NavBar() {
         </ul>
 
         <div className="mt-2 flex items-center gap-2 border-2 border-black rounded px-3 py-1 md:mt-0 md:ml-4">
-          <AiOutlineLogin className="hidden max-[500px]:hidden md:block" />
-          <button onClick={() => signIn("google")}>Login</button>
+          <VscAccount className="hidden max-[500px]:hidden md:block" />
+          { session ? 
+          
+          (<button onClick={() => signOut()} >Logout</button>) 
+          :
+           (<button onClick={() => signIn("google")} >Login</button>) }
         </div>
       </div>
     </nav>
