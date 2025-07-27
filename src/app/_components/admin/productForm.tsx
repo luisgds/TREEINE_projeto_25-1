@@ -20,7 +20,7 @@ type ProductFormProps = {
 export function ProductForm({
     onClose, 
     isCreate,
-    data={nome:null, id:0, preco:0, descricao:"", imageUrl:""}
+    data={nome:null, id:undefined, preco:0, descricao:"", imageUrl:""}
 } : ProductFormProps) {
     const [nome, setNome] = useState(data["nome"] ?? "");
     const [preco, setPreco] = useState(data["preco"] ?? 0);
@@ -73,12 +73,13 @@ export function ProductForm({
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
-        let imageUrl = "";
+        let imageUrl = data["imageUrl"] ?? undefined;
         if (imageFile) {
             const base64 = await fileToBase64(imageFile);
             const uploadResult = await uploadImage.mutateAsync({ file: base64 });
             imageUrl = uploadResult.url;
         }
+        console.log(imageUrl);
 
         request.mutate({nome, preco, descricao, id:data["id"], imageUrl});
     }
